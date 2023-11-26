@@ -12,11 +12,12 @@ post request
 
 body sample:
 
-'''
+```
 {
 
 
   "body": "{\"username\": \"alpbeydemir\", \"password\": \"samplepassword\"}"
 
 
-}'''
+}
+```
