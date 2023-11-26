@@ -30,3 +30,16 @@ post request
     "body": "{\"username\": \"alpbeydemir\", \"password\": \"12345\", \"email\": \"alpbeydemir@hotmail.com\"}"
 }
 ```
+
+
+/verifycode   ->   https://o11xc731wl.execute-api.eu-central-1.amazonaws.com/dev2/verifycode
+
+
+post request
+
+
+```
+{
+    "body": "{\"username\": \"alpbeydemir\", \"password\": \"12345\", \"code\": \"402995\"}"
+}
+```
