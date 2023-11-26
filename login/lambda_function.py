@@ -25,11 +25,12 @@ def lambda_handler(event, context):
         print(e.response['Error']['Message'])
         return {'statusCode': 500, 'body': json.dumps('Internal serer error: User not found')}
 
-    if 'Item' in response and response['Item']['IsVerified'] == "0":
-        return {'statusCode': 501, 'body': json.dumps('User not verified')}
+    
 
     # Kullanıcı bulunursa ve şifre doğruysa JWT oluştur
     if 'Item' in response and response['Item']['Password'] == password:
+        if response['Item']['IsVerified'] == "0":
+            return {'statusCode': 501, 'body': json.dumps('User not verified')}
         # Token içeriği
         payload = {
             'username': username,
@@ -88,6 +89,6 @@ event = {
         "time": "26/Nov/2023:06:59:33 +0000",
         "timeEpoch": 1700981973556
     },
-    "body": "{\r\n  \"body\": \"{\\\"username\\\": \\\"alpbeydemir\\\", \\\"password\\\": \\\"samplepassword\\\"}\"\r\n}"
+    "body": "{\r\n  \"body\": \"{\\\"username\\\": \\\"barisbeydemir\\\", \\\"password\\\": \\\"12345\\\"}\"\r\n}"
 }
 lambda_handler(event, None)
