@@ -5,8 +5,34 @@ from boto3.dynamodb.conditions import Attr
 from botocore.exceptions import ClientError
 
 # DynamoDB ayarları
+ses_client = boto3.client('ses', region_name='eu-central-1')  
 dynamodb = boto3.resource('dynamodb')
 table = dynamodb.Table('Users')
+
+def send_email(email, code):
+    try:
+        response = ses_client.send_email(
+            Source='ParkGuideIstanbul@outlook.com.tr',  # E-posta gönderen adres
+            Destination={
+                'ToAddresses': [
+                    email  # Alıcı e-posta adresi
+                ]
+            },
+            Message={
+                'Subject': {
+                    'Data': 'Your Verification Code'
+                },
+                'Body': {
+                    'Text': {
+                        'Data': f'Your verification code is: {code}'
+                    }
+                }
+            }
+        )
+        return response
+    except ClientError as e:
+        print(e.response['Error']['Message'])
+        return None
 
 def lambda_handler(event, context):
     # Kullanıcı bilgilerini al
@@ -54,7 +80,12 @@ def lambda_handler(event, context):
                 'Code': code 
             }
         )
-        return {'statusCode': 200, 'body': json.dumps('User created successfully')}
+        # E-posta gönderimi
+        email_response = send_email(email, code)
+        if email_response:
+            return {'statusCode': 200, 'body': json.dumps('User created and email sent successfully')}
+        else:
+            return {'statusCode': 500, 'body': json.dumps('User created but email sending failed')}
     except ClientError as e:
         print(e.response['Error']['Message'])
         return {'statusCode': 500, 'body': json.dumps('Internal server error during user creation')}
@@ -98,7 +129,7 @@ event = {
         "time": "26/Nov/2023:06:59:33 +0000",
         "timeEpoch": 1700981973556
     },
-    "body": "{\r\n  \"body\": \"{\\\"username\\\": \\\"yeni_kullanici\\\", \\\"password\\\": \\\"yeni_sifre\\\",\\\"email\\\": \\\"yeni_kullanici@mail.com\\\"}\"\r\n}"
+    "body": "{\r\n  \"body\": \"{\\\"username\\\": \\\"alpbeydemir\\\", \\\"password\\\": \\\"samplepassword\\\",\\\"email\\\": \\\"alpbeydemir@hotmail.com\\\"}\"\r\n}"
 }
 
 lambda_handler(event, None)
