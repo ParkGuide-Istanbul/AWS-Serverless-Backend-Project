@@ -5,7 +5,7 @@ AWS Serverless Backend Project of ParkGuide İstanbul Application
 
 #**************************************************************MANUEL DEPLOYU UNUTMA*****************************************************************************
 
-/login   ->   https://o11xc731wl.execute-api.eu-central-1.amazonaws.com/dev2/login  
+###/login   ->   https://o11xc731wl.execute-api.eu-central-1.amazonaws.com/dev2/login  
 
 
 post request
@@ -19,7 +19,7 @@ body sample:
 }
 ```
 
-/signup   ->   https://o11xc731wl.execute-api.eu-central-1.amazonaws.com/dev2/signup  
+###/signup   ->   https://o11xc731wl.execute-api.eu-central-1.amazonaws.com/dev2/signup  
 
 
 post request
@@ -32,7 +32,7 @@ post request
 ```
 
 
-/verifycode   ->   https://o11xc731wl.execute-api.eu-central-1.amazonaws.com/dev2/verifycode
+###/verifycode   ->   https://o11xc731wl.execute-api.eu-central-1.amazonaws.com/dev2/verifycode
 
 
 post request

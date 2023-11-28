@@ -3,36 +3,17 @@ import boto3
 import random
 from boto3.dynamodb.conditions import Attr
 from botocore.exceptions import ClientError
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+
+sender_address = "ParkGuideIstanbul@outlook.com.tr"
+passwordemail = "Parkguide123"
 
 # DynamoDB ayarları
-ses_client = boto3.client('ses', region_name='eu-central-1')  
 dynamodb = boto3.resource('dynamodb')
 table = dynamodb.Table('Users')
 
-def send_email(email, code):
-    try:
-        response = ses_client.send_email(
-            Source='ParkGuideIstanbul@outlook.com.tr',  # E-posta gönderen adres
-            Destination={
-                'ToAddresses': [
-                    email  # Alıcı e-posta adresi
-                ]
-            },
-            Message={
-                'Subject': {
-                    'Data': 'Your Verification Code'
-                },
-                'Body': {
-                    'Text': {
-                        'Data': f'Your verification code is: {code}'
-                    }
-                }
-            }
-        )
-        return response
-    except ClientError as e:
-        print(e.response['Error']['Message'])
-        return None
 
 def lambda_handler(event, context):
     # Kullanıcı bilgilerini al
@@ -41,12 +22,12 @@ def lambda_handler(event, context):
     body = json.loads(body1['body'])
     username = body['username']
     password = body['password']
-    email = body['email']
+    recipient_email = body['email']
 
     # E-posta adresini kontrol et
     try:
         email_response = table.scan(
-            FilterExpression=Attr('Mail').eq(email)
+            FilterExpression=Attr('Mail').eq(recipient_email)
         )
         if email_response['Items']:
             # E-posta adresi zaten kullanımda
@@ -74,14 +55,29 @@ def lambda_handler(event, context):
             Item={
                 'Username': username,
                 'Password': password,
-                'Mail': email,
+                'Mail': recipient_email,
                 'IsVerified': '0',
                 'Roles': {"StandartUser"},
                 'Code': code 
             }
         )
+
         # E-posta gönderimi
-        email_response = send_email(email, code)
+        message = MIMEMultipart()
+        message['From'] = sender_address
+        message['To'] = recipient_email
+        message['Subject'] = 'Your Verification Code'
+        body = f'Your verification code is: {code}'
+        message.attach(MIMEText(body, 'plain'))
+
+        # Create SMTP session for sending the mail
+        session = smtplib.SMTP('smtp-mail.outlook.com', 587) # use gmail with port
+        session.starttls() # enable security
+        session.login(sender_address, passwordemail) # login with mail_id and password
+        text = message.as_string()
+        session.sendmail(sender_address, recipient_email, text)
+        session.quit()
+
         if email_response:
             return {'statusCode': 200, 'body': json.dumps('User created and email sent successfully')}
         else:
