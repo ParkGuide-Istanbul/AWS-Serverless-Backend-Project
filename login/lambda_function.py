@@ -13,8 +13,7 @@ SECRET_KEY = 'Q56WTH4D98N1J2D5Z6U1UTKLDI4J5D6F'
 
 def lambda_handler(event, context):
     # Kullanıcı adı ve şifresi API Gateway'den alınır
-    body1 = json.loads(event['body'])
-    body = json.loads(body1['body'])
+    body = event['body']
     username = body['username']
     password = body['password']
 
@@ -111,6 +110,11 @@ event = {
         "time": "26/Nov/2023:06:59:33 +0000",
         "timeEpoch": 1700981973556
     },
-    "body": "{\r\n  \"body\": \"{\\\"username\\\": \\\"barisbeydemir\\\", \\\"password\\\": \\\"12345\\\"}\"\r\n}"
+    "body":   {
+        "username": "barisbeydemir",
+        "password": "12345"
+    }  
+    
+    
 }
 lambda_handler(event, None)

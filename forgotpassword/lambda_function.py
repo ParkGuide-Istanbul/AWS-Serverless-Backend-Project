@@ -17,8 +17,7 @@ table = dynamodb.Table('Users')
 
 def lambda_handler(event, context):
     # E-posta adresini al
-    body1 = json.loads(event['body'])
-    body = json.loads(body1['body'])
+    body = event['body']
     recipient_email = body['email']
 
     # Kullanıcı adını bul
@@ -97,21 +96,23 @@ def lambda_handler(event, context):
             }
 
 
-# event = {
-#     "version": "2.0",
-#     "routeKey": "POST /login",
-#     "rawPath": "/dev2/login",
-#     "rawQueryString": "",
-#     "headers": {
-#         "__requestverificationtoken": "3NAMpH5Gl6HAgNOKrfrWOuDcg0g3Z-2yZzscrBLJXEImvN0VY3zaRNVtMgVM5UMcIa3yTwJYiAaxES5BH6uX5Zl_UEzwBJtA5lYYx8RpVECnRdbMQaVDqHEuhPkir82aWn6c4A2",
-#         "accept": "*/*",
-#         "accept-encoding": "gzip, deflate, br"
-#     },
-#     "requestContext": {
-#         "accountId": "405996282404",
-#         "apiId": "o11xc731wl"
-#     },
-#     "body": "{\r\n  \"body\": \"{\\\"email\\\": \\\"alpbeydemir@hotmail.com\\\"}\"\r\n}"
-# }
+event = {
+    "version": "2.0",
+    "routeKey": "POST /login",
+    "rawPath": "/dev2/login",
+    "rawQueryString": "",
+    "headers": {
+        "__requestverificationtoken": "3NAMpH5Gl6HAgNOKrfrWOuDcg0g3Z-2yZzscrBLJXEImvN0VY3zaRNVtMgVM5UMcIa3yTwJYiAaxES5BH6uX5Zl_UEzwBJtA5lYYx8RpVECnRdbMQaVDqHEuhPkir82aWn6c4A2",
+        "accept": "*/*",
+        "accept-encoding": "gzip, deflate, br"
+    },
+    "requestContext": {
+        "accountId": "405996282404",
+        "apiId": "o11xc731wl"
+    },
+    "body": {
+        "email": "alpbeydemir@hotmail.com"
+    }
+}
 
 # lambda_handler(event, None)

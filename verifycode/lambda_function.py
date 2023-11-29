@@ -8,8 +8,7 @@ table = dynamodb.Table('Users')
 
 def lambda_handler(event, context):
     # Kullanıcıdan gelen bilgileri al
-    body1 = json.loads(event['body'])
-    body = json.loads(body1['body'])
+    body = event['body']
     username = body['username']
     password = body['password']
     code = body['code']
@@ -76,7 +75,13 @@ event = {
         "accountId": "405996282404",
         "apiId": "o11xc731wl"
     },
-    "body": "{\r\n  \"body\": \"{\\\"username\\\": \\\"alpbeydemir\\\", \\\"password\\\": \\\"12345\\\",\\\"code\\\": \\\"402995\\\"}\"\r\n}"
+    "body": {
+        "username": "alpbeydemir",
+        "password": "12345",
+        "code": "402995"
+    }
+    
+    
 }
 
 lambda_handler(event, None)
