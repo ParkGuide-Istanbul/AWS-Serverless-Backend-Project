@@ -31,10 +31,20 @@ def lambda_handler(event, context):
         )
         if email_response['Items']:
             # E-posta adresi zaten kullanımda
-            return {'statusCode': 400, 'body': json.dumps('Email already in use')}
+            return {
+            'statusCode': 400,
+            'body': json.dumps({
+                    'message': json.dumps('Email already in use')
+                })   
+        }
     except ClientError as e:
         print(e.response['Error']['Message'])
-        return {'statusCode': 500, 'body': json.dumps('Internal server error during email check')}
+        return {
+            'statusCode': 500,
+            'body': json.dumps({
+                    'message': json.dumps('Internal server error during email check')
+                })   
+        }
 
     # Kullanıcı adını kontrol et
     try:
@@ -43,10 +53,20 @@ def lambda_handler(event, context):
         )
         if username_response['Items']:
             # Kullanıcı adı zaten kullanımda
-            return {'statusCode': 400, 'body': json.dumps('Username already in use')}
+            return {
+            'statusCode': 400,
+            'body': json.dumps({
+                    'message': json.dumps('Username already in use')
+                })   
+        }
     except ClientError as e:
         print(e.response['Error']['Message'])
-        return {'statusCode': 500, 'body': json.dumps('Internal server error during username check')}
+        return {
+            'statusCode': 500,
+            'body': json.dumps({
+                    'message': json.dumps('Internal server error during username check')
+                })   
+        }
 
     # Yeni kullanıcıyı kaydet
     try:
@@ -79,12 +99,27 @@ def lambda_handler(event, context):
         session.quit()
 
         if email_response:
-            return {'statusCode': 200, 'body': json.dumps('User created and email sent successfully')}
+            return {
+            'statusCode': 200,
+            'body': json.dumps({
+                    'message': json.dumps('User created and email sent successfully')
+                })   
+        }
         else:
-            return {'statusCode': 500, 'body': json.dumps('User created but email sending failed')}
+            return {
+            'statusCode': 500,
+            'body': json.dumps({
+                    'message': json.dumps('User created but email sending failed')
+                })   
+        }
     except ClientError as e:
         print(e.response['Error']['Message'])
-        return {'statusCode': 500, 'body': json.dumps('Internal server error during user creation')}
+        return {
+            'statusCode': 500,
+            'body': json.dumps({
+                    'message': json.dumps('Internal server error during user creation')
+                })   
+        }
 
 # Test için örnek event
 
