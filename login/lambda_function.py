@@ -14,9 +14,10 @@ SECRET_KEY = 'Q56WTH4D98N1J2D5Z6U1UTKLDI4J5D6F'
 def lambda_handler(event, context):
     # Kullanıcı adı ve şifresi API Gateway'den alınır
     
-    body = json.loads(event['body'])
+    body =  json.loads(event['body'])                   #event['body']  
     username = body['username']
     password = body['password']
+    required_roles = body['requiredRoles']
 
     # Kullanıcı bilgilerini DynamoDB'den kontrol et
     try:
@@ -43,6 +44,18 @@ def lambda_handler(event, context):
                     'message': 'User not verified'
                 })
             }
+        
+        user_roles = response['Item']['Roles']
+        # İstenen rollerden en az biri kullanıcının rolleri arasında var mı kontrol et
+        if not any(role in user_roles for role in required_roles):
+            return {
+                'statusCode': 403,
+                'body': json.dumps({
+                    'statusCode': 403,
+                    'message': 'You do not have the required permissions'
+                })
+            }
+        
         # Token içeriği
         payload = {
             'username': username,
@@ -112,8 +125,9 @@ event = {
         "timeEpoch": 1700981973556
     },
     "body":   {
-        "username": "barisbeydemir",
-        "password": "12345"
+        "username": "alpbeydemir",
+        "password": "blabla",
+        "requiredRoles": ["Admin", "ParkingSystemAdmin"] 
     }  
     
     

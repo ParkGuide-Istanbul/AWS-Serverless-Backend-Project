@@ -15,7 +15,9 @@ body sample:
 
 ```
 {
-    "username": "barisbeydemir","password": "12345"
+    "username": "alpbeydemir",
+    "password": "blabla",
+    "requiredRoles": ["Admin", "ParkingSystemAdmin"] 
 }
 ```
 
