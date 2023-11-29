@@ -19,7 +19,13 @@ def lambda_handler(event, context):
         response = table.get_item(Key={'Username': username})
         if 'Item' not in response or response['Item']['Password'] != password:
             # Kullanıcı adı veya şifre yanlış
-            return {'statusCode': 400, 'body': json.dumps('Invalid username or password')}
+            return {
+            'statusCode': 400,
+            'body': json.dumps({
+                    'statusCode': 400,
+                    'message': 'Invalid username or password'
+                })   
+        }
 
         if response['Item']['Code'] == code:
             # Doğrulama kodu eşleşiyor, IsVerified'i güncelle
@@ -28,14 +34,32 @@ def lambda_handler(event, context):
                 UpdateExpression='SET IsVerified = :val1, Code = :val2',
                 ExpressionAttributeValues={':val1': '1', ':val2': '-'}
             )
-            return {'statusCode': 200, 'body': json.dumps('User verified successfully')}
+            return {
+            'statusCode': 200,
+            'body': json.dumps({
+                    'statusCode': 200,
+                    'message': 'User verified successfully'
+                })   
+        }
         else:
             # Doğrulama kodu eşleşmiyor
-            return {'statusCode': 400, 'body': json.dumps('Invalid verification code')}
+            return {
+            'statusCode': 400,
+            'body': json.dumps({
+                    'statusCode': 400,
+                    'message': 'Invalid verification code'
+                })   
+        }
 
     except ClientError as e:
         print(e.response['Error']['Message'])
-        return {'statusCode': 500, 'body': json.dumps('Internal server error')}
+        return {
+            'statusCode': 500,
+            'body': json.dumps({
+                    'statusCode': 500,
+                    'message': 'Internal server error'
+                })   
+        }
 
 
 event = {

@@ -30,6 +30,7 @@ def lambda_handler(event, context):
             return {
                 'statusCode': 404,
                 'body': json.dumps({
+                    'statusCode': 404,
                     'message': 'User not found with that email'
                 })
             }
@@ -40,6 +41,7 @@ def lambda_handler(event, context):
         return {
                 'statusCode': 500,
                 'body': json.dumps({
+                    'statusCode': 500,
                     'message': 'Internal server error during user search'
                 })
             }
@@ -78,6 +80,7 @@ def lambda_handler(event, context):
         return {
                 'statusCode': 200,
                 'body': json.dumps({
+                    'statusCode': 200,
                     'message': 'Password reset code sent successfully',
                     'username': username,
                     'email': recipient_email
@@ -88,6 +91,7 @@ def lambda_handler(event, context):
         return {
                 'statusCode': 500,
                 'body': json.dumps({
+                    'statusCode': 500,
                     'message': 'Internal server error during password reset process'
                 })
             }

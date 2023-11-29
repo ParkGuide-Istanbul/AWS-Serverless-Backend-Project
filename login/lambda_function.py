@@ -26,6 +26,7 @@ def lambda_handler(event, context):
         return  {
                 'statusCode': 500,
                 'body': json.dumps({
+                    'statusCode': 500,
                     'message': 'Internal serer error: User not found'
                 })
             }
@@ -38,6 +39,7 @@ def lambda_handler(event, context):
             return {
                 'statusCode': 501,
                 'body': json.dumps({
+                    'statusCode': 501,
                     'message': 'User not verified'
                 })
             }
@@ -57,6 +59,7 @@ def lambda_handler(event, context):
         return {
             'statusCode': 200,
             'body': json.dumps({
+                    'statusCode': 200,
                     'message': json.dumps({'token': token})
                 })
             
@@ -65,7 +68,8 @@ def lambda_handler(event, context):
         return {
             'statusCode': 402,
             'body': json.dumps({
-                    'message': json.dumps('Wrong password')
+                    'statusCode': 402,
+                    'message': 'Wrong password'
                 })   
         }
 

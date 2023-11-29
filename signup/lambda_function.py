@@ -34,7 +34,8 @@ def lambda_handler(event, context):
             return {
             'statusCode': 400,
             'body': json.dumps({
-                    'message': json.dumps('Email already in use')
+                    'statusCode': 400,
+                    'message': 'Email already in use'
                 })   
         }
     except ClientError as e:
@@ -42,7 +43,8 @@ def lambda_handler(event, context):
         return {
             'statusCode': 500,
             'body': json.dumps({
-                    'message': json.dumps('Internal server error during email check')
+                    'statusCode': 500,
+                    'message': 'Internal server error during email check'
                 })   
         }
 
@@ -56,7 +58,8 @@ def lambda_handler(event, context):
             return {
             'statusCode': 400,
             'body': json.dumps({
-                    'message': json.dumps('Username already in use')
+                    'statusCode': 400,
+                    'message': 'Username already in use'
                 })   
         }
     except ClientError as e:
@@ -64,7 +67,8 @@ def lambda_handler(event, context):
         return {
             'statusCode': 500,
             'body': json.dumps({
-                    'message': json.dumps('Internal server error during username check')
+                    'statusCode': 500,
+                    'message': 'Internal server error during username check'
                 })   
         }
 
@@ -102,14 +106,16 @@ def lambda_handler(event, context):
             return {
             'statusCode': 200,
             'body': json.dumps({
-                    'message': json.dumps('User created and email sent successfully')
+                    'statusCode': 200,
+                    'message': 'User created and email sent successfully'
                 })   
         }
         else:
             return {
             'statusCode': 500,
             'body': json.dumps({
-                    'message': json.dumps('User created but email sending failed')
+                    'statusCode': 500,
+                    'message': 'User created but email sending failed'
                 })   
         }
     except ClientError as e:
@@ -117,7 +123,8 @@ def lambda_handler(event, context):
         return {
             'statusCode': 500,
             'body': json.dumps({
-                    'message': json.dumps('Internal server error during user creation')
+                    'statusCode': 500,
+                    'message': 'Internal server error during user creation'
                 })   
         }
 
