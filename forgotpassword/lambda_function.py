@@ -17,7 +17,7 @@ table = dynamodb.Table('Users')
 
 def lambda_handler(event, context):
     # E-posta adresini al
-    body = event['body']
+    body = json.loads(event['body'])
     recipient_email = body['email']
 
     # Kullanıcı adını bul
