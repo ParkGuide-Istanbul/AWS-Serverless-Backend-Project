@@ -23,14 +23,24 @@ def lambda_handler(event, context):
         response = table.get_item(Key={'Username': username})
     except ClientError as e:
         print(e.response['Error']['Message'])
-        return {'statusCode': 500, 'body': json.dumps('Internal serer error: User not found')}
+        return  {
+                'statusCode': 500,
+                'body': json.dumps({
+                    'message': 'Internal serer error: User not found'
+                })
+            }
 
     
 
     # Kullanıcı bulunursa ve şifre doğruysa JWT oluştur
     if 'Item' in response and response['Item']['Password'] == password:
         if response['Item']['IsVerified'] == "0":
-            return {'statusCode': 501, 'body': json.dumps('User not verified')}
+            return {
+                'statusCode': 501,
+                'body': json.dumps({
+                    'message': 'User not verified'
+                })
+            }
         # Token içeriği
         payload = {
             'username': username,
@@ -46,10 +56,18 @@ def lambda_handler(event, context):
         print(decoded_payload)
         return {
             'statusCode': 200,
-            'body': json.dumps({'token': token})
+            'body': json.dumps({
+                    'message': json.dumps({'token': token})
+                })
+            
         }
     else:
-        return {'statusCode': 402, 'body': json.dumps('Wrong password')}
+        return {
+            'statusCode': 402,
+            'body': json.dumps({
+                    'message': json.dumps('Wrong password')
+                })   
+        }
 
 # Test için
 event = {
