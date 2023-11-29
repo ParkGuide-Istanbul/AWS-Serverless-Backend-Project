@@ -15,7 +15,7 @@ body sample:
 
 ```
 {
-  "body": "{\"username\": \"alpbeydemir\", \"password\": \"samplepassword\"}"
+    "username": "barisbeydemir","password": "12345"
 }
 ```
 
@@ -27,7 +27,9 @@ post request
 
 ```
 {
-    "body": "{\"username\": \"alpbeydemir\", \"password\": \"12345\", \"email\": \"alpbeydemir@hotmail.com\"}"
+    "username": "alpbeydemir",
+    "password": "samplepassword",
+    "email": "alpbeydemir@hotmail.com"
 }
 ```
 
@@ -40,7 +42,9 @@ post request
 
 ```
 {
-    "body": "{\"username\": \"alpbeydemir\", \"password\": \"12345\", \"code\": \"402995\"}"
+    "username": "alpbeydemir",
+    "password": "12345",
+    "code": "402995"
 }
 ```
 
@@ -52,7 +56,7 @@ post request
 
 ```
 {
-    "body": "{\"email\": \"alpbeydemir@hotmail.com\"}"
+    "email": "alpbeydemir@hotmail.com"
 }
 ```
 
@@ -64,6 +68,9 @@ post request
 
 ```
 {
-    "body": "{\"username\": \"alpbeydemir\", \"password\": \"blabla\", \"email\": \"alpbeydemir@hotmail.com\", \"code\": \"567912\"}"
+    "username": "alpbeydemir",
+    "password": "samplepassword",
+    "email": "alpbeydemir@hotmail.com",
+    "code": "271296"
 }
 ```
