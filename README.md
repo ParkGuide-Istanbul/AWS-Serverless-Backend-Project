@@ -43,3 +43,27 @@ post request
     "body": "{\"username\": \"alpbeydemir\", \"password\": \"12345\", \"code\": \"402995\"}"
 }
 ```
+
+###/forgotpassword   ->   https://o11xc731wl.execute-api.eu-central-1.amazonaws.com/dev2/forgotpassword
+
+
+post request
+
+
+```
+{
+    "body": "{\"email\": \"alpbeydemir@hotmail.com\"}"
+}
+```
+
+###/resetpassword  ->   https://o11xc731wl.execute-api.eu-central-1.amazonaws.com/dev2/resetpassword
+
+
+post request
+
+
+```
+{
+    "body": "{\"username\": \"alpbeydemir\", \"password\": \"blabla\", \"email\": \"alpbeydemir@hotmail.com\", \"code\": \"567912\"}"
+}
+```
