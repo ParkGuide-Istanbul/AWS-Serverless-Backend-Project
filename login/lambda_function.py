@@ -2,6 +2,7 @@ import json
 import boto3
 import jwt
 import datetime
+import hashlib
 from botocore.exceptions import ClientError
 
 # DynamoDB ayarları
@@ -19,6 +20,8 @@ def lambda_handler(event, context):
     password = body['password']
     required_roles = body['requiredRoles']
 
+    hashed_password = hashlib.sha256(password.encode()).hexdigest()
+
     # Kullanıcı bilgilerini DynamoDB'den kontrol et
     try:
         response = table.get_item(Key={'Username': username})
@@ -35,7 +38,7 @@ def lambda_handler(event, context):
     
 
     # Kullanıcı bulunursa ve şifre doğruysa JWT oluştur
-    if 'Item' in response and response['Item']['Password'] == password:
+    if 'Item' in response and response['Item']['Password'] == hashed_password:
         if response['Item']['IsVerified'] == "0":
             return {
                 'statusCode': 501,
@@ -73,7 +76,13 @@ def lambda_handler(event, context):
             'statusCode': 200,
             'body': json.dumps({
                     'statusCode': 200,
-                    'message': {'token': token}
+                    'message': {
+                        'token': token,
+                        'username': response['Item']['Username'],
+                        'name': response['Item'].get('Name', 'Not Available'),  # Eğer Name yoksa
+                        'surname': response['Item'].get('Surname', 'Not Available'),  # Eğer Surname yoksa
+                        'roles': list(response['Item']['Roles'])
+                    }
                 })
             
         }

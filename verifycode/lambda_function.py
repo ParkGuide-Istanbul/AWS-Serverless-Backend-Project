@@ -1,5 +1,6 @@
 import json
 import boto3
+import hashlib
 from botocore.exceptions import ClientError
 
 # DynamoDB ayarları
@@ -13,10 +14,13 @@ def lambda_handler(event, context):
     password = body['password']
     code = body['code']
 
+
+    hashed_password = hashlib.sha256(password.encode()).hexdigest()
+
     # Kullanıcı bilgilerini DynamoDB'den kontrol et
     try:
         response = table.get_item(Key={'Username': username})
-        if 'Item' not in response or response['Item']['Password'] != password:
+        if 'Item' not in response or response['Item']['Password'] != hashed_password:
             # Kullanıcı adı veya şifre yanlış
             return {
             'statusCode': 400,

@@ -37,7 +37,9 @@ post request
 {
     "username": "alpbeydemir",
     "password": "samplepassword",
-    "email": "alpbeydemir@hotmail.com"
+    "email": "alpbeydemir@hotmail.com",
+    "name": "Alp",
+    "surname": "Beydemir"
 }
 ```
 
@@ -82,3 +84,11 @@ post request
     "code": "271296"
 }
 ```
+
+
+### şifreler veritabanında hash lenmiş bir şekilde olduğu için şifreleri kaybetmemek adına şuanki kullanıcıları ve şifreleri aşağıya yazıyorum
+
+alpbeydemir -> "password": "samplepassword",
+devrim24 -> "password": "67890",
+yeni_kullanici -> "password": "yeni_sifre",
+barisbeydemir -> "password": "12345",

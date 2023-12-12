@@ -1,5 +1,6 @@
 import json
 import boto3
+import hashlib
 from boto3.dynamodb.conditions import Key, Attr
 from botocore.exceptions import ClientError
 
@@ -14,6 +15,8 @@ def lambda_handler(event, context):
     recipient_email = body['email']
     submitted_code = body['code']
     new_password = body['password']
+
+    hashed_password = hashlib.sha256(new_password.encode()).hexdigest()
 
     # Kullanıcıyı bul
     try:
@@ -56,7 +59,7 @@ def lambda_handler(event, context):
             Key={'Username': username},
             UpdateExpression="set Password = :p, Code = :c",
             ExpressionAttributeValues={
-                ':p': new_password,
+                ':p': hashed_password,
                 ':c': '-'
             }
         )
