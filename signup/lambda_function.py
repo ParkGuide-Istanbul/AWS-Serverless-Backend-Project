@@ -1,6 +1,7 @@
 import json
 import boto3
 import random
+import hashlib
 from boto3.dynamodb.conditions import Attr
 from botocore.exceptions import ClientError
 import smtplib
@@ -18,10 +19,15 @@ table = dynamodb.Table('Users')
 def lambda_handler(event, context):
     # Kullanıcı bilgilerini al
 
-    body = json.loads(event['body'])
+    body =  json.loads(event['body'])       #  event['body'] 
     username = body['username']
     password = body['password']
     recipient_email = body['email']
+    name = body['name']  
+    surname = body['surname']  
+
+    hashed_password = hashlib.sha256(password.encode()).hexdigest()
+
 
     # E-posta adresini kontrol et
     try:
@@ -77,8 +83,10 @@ def lambda_handler(event, context):
         response = table.put_item(
             Item={
                 'Username': username,
-                'Password': password,
+                'Password': hashed_password,
                 'Mail': recipient_email,
+                'Name': name,  
+                'Surname': surname,  
                 'IsVerified': '0',
                 'Roles': {"StandartUser"},
                 'Code': code 
@@ -146,7 +154,9 @@ event = {
     "body": {
         "username": "alpbeydemir",
         "password": "samplepassword",
-        "email": "alpbeydemir@hotmail.com"
+        "email": "alpbeydemir@hotmail.com",
+        "name": "Alp",
+        "surname": "Beydemir"
 
     }
     

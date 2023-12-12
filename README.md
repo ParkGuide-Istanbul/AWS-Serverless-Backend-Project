@@ -5,6 +5,12 @@ AWS Serverless Backend Project of ParkGuide İstanbul Application
 
 #**************************************************************MANUEL DEPLOYU UNUTMA*****************************************************************************
 
+###******************************************************COK ONEMLI KENDIME NOT*****************************************************************************
+aws console da lambda da test ederken -> event['body'] kullan
+deploy ederken ->  json.loads(event['body'])  kullan
+son aşamada json.loads kalsın
+###**************************************************************************************
+
 ###/login   ->   https://o11xc731wl.execute-api.eu-central-1.amazonaws.com/dev2/login  
 
 
