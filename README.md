@@ -92,3 +92,40 @@ alpbeydemir -> "password": "samplepassword",
 devrim24 -> "password": "67890",
 yeni_kullanici -> "password": "yeni_sifre",
 barisbeydemir -> "password": "12345",
+
+
+### bu aşamadan sonra yazılan btün endpointlerde headers a Authorization eklenmesi zorunludur
+
+## örnek:
+
+![Alt text](image.png)
+
+## json formatında ise şu şekilde:
+
+{
+    "version": "2.0",
+
+    "headers": {
+        "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFscGJleWRlbWlyIiwicm9sZXMiOlsiU3RhbmRhcnRVc2VyIiwiQWRtaW4iXSwiZXhwIjoxNzAyNDI4MTIzfQ.B7f7J-DPULjvJCZKdZv8hD3GIIhOnvF5xdb794TumLA",
+        "accept": "*/*",
+        "accept-encoding": "gzip, deflate, br"
+    },
+    "requestContext": {
+        "accountId": "405996282404",
+        "apiId": "o11xc731wl"
+    },
+    "body": {
+        "username": "alpbeydemir",
+        "password": "samplepassword",
+        "code": "123456"
+    }
+        
+}
+
+
+###/listparks  ->   https://o11xc731wl.execute-api.eu-central-1.amazonaws.com/dev2/listparks
+
+get request
+
+## Authorization unutma
+
