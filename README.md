@@ -123,13 +123,13 @@ barisbeydemir -> "password": "12345",
 }
 
 
-###/listparks  ->   https://o11xc731wl.execute-api.eu-central-1.amazonaws.com/dev2/listparks
+###/listparks  ->   https://o11xc731wl.execute-api.eu-central-1.amazonaws.com/dev2/listparks        ----> admin panel için
 
 get request
 
 ## Authorization unutma
 
-###/configurestateparks  ->   https://o11xc731wl.execute-api.eu-central-1.amazonaws.com/dev2/configurestateparks
+###/configurestateparks  ->   https://o11xc731wl.execute-api.eu-central-1.amazonaws.com/dev2/configurestateparks       ----> admin panel için
 
 post request
 
@@ -149,3 +149,8 @@ post request
          ]
 }
 ```
+
+
+###/getuserlist  ->   https://o11xc731wl.execute-api.eu-central-1.amazonaws.com/dev2/getuserlist      ----> admin panel için
+
+get request
