@@ -154,3 +154,36 @@ post request
 ###/getuserlist  ->   https://o11xc731wl.execute-api.eu-central-1.amazonaws.com/dev2/getuserlist      ----> admin panel için
 
 get request
+
+
+###/edituserlist  ->   https://o11xc731wl.execute-api.eu-central-1.amazonaws.com/dev2/edituserlist       ----> admin panel için
+
+post request
+```
+{
+    "editedUsers": [
+        {
+            "Username": "alpbeydemir",
+            "Name": "Alpp",
+            "Surname": "Beydemir",
+            "Mail": "alpbeydemir@hotmail.com",
+            "Roles": [
+                "Admin",
+                "StandardUser",
+                "ParkingSystemAdmin"
+            ]
+        },
+        {
+            "Username": "barisbeydemir",
+            "Name": "bariss",
+            "Surname": "Beydemir",
+            "Mail": "beydemir18@itu.edu.tr",
+            "Roles": [
+                "Admin",
+                "StandardUser",
+                "ParkingSystemAdmin"
+            ]
+        }
+    ]
+}
+```
