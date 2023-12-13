@@ -2,6 +2,7 @@ import json
 import boto3
 import jwt
 import datetime
+import hashlib
 from botocore.exceptions import ClientError
 
 # DynamoDB ayarları
@@ -13,24 +14,51 @@ SECRET_KEY = 'Q56WTH4D98N1J2D5Z6U1UTKLDI4J5D6F'
 
 def lambda_handler(event, context):
     # Kullanıcı adı ve şifresi API Gateway'den alınır
-    body1 = json.loads(event['body'])
-    body = json.loads(body1['body'])
+    
+    body =  json.loads(event['body'])                   #event['body']  
     username = body['username']
     password = body['password']
+    required_roles = body['requiredRoles']
+
+    hashed_password = hashlib.sha256(password.encode()).hexdigest()
 
     # Kullanıcı bilgilerini DynamoDB'den kontrol et
     try:
         response = table.get_item(Key={'Username': username})
     except ClientError as e:
         print(e.response['Error']['Message'])
-        return {'statusCode': 500, 'body': json.dumps('Internal serer error: User not found')}
+        return  {
+                'statusCode': 500,
+                'body': json.dumps({
+                    'statusCode': 500,
+                    'message': 'Internal serer error: User not found'
+                })
+            }
 
     
 
     # Kullanıcı bulunursa ve şifre doğruysa JWT oluştur
-    if 'Item' in response and response['Item']['Password'] == password:
+    if 'Item' in response and response['Item']['Password'] == hashed_password:
         if response['Item']['IsVerified'] == "0":
-            return {'statusCode': 501, 'body': json.dumps('User not verified')}
+            return {
+                'statusCode': 501,
+                'body': json.dumps({
+                    'statusCode': 501,
+                    'message': 'User not verified'
+                })
+            }
+        
+        user_roles = response['Item']['Roles']
+        # İstenen rollerden en az biri kullanıcının rolleri arasında var mı kontrol et
+        if not any(role in user_roles for role in required_roles):
+            return {
+                'statusCode': 403,
+                'body': json.dumps({
+                    'statusCode': 403,
+                    'message': 'You do not have the required permissions'
+                })
+            }
+        
         # Token içeriği
         payload = {
             'username': username,
@@ -46,10 +74,26 @@ def lambda_handler(event, context):
         print(decoded_payload)
         return {
             'statusCode': 200,
-            'body': json.dumps({'token': token})
+            'body': json.dumps({
+                    'statusCode': 200,
+                    'message': {
+                        'token': token,
+                        'username': response['Item']['Username'],
+                        'name': response['Item'].get('Name', 'Not Available'),  # Eğer Name yoksa
+                        'surname': response['Item'].get('Surname', 'Not Available'),  # Eğer Surname yoksa
+                        'roles': list(response['Item']['Roles'])
+                    }
+                })
+            
         }
     else:
-        return {'statusCode': 402, 'body': json.dumps('Wrong password')}
+        return {
+            'statusCode': 402,
+            'body': json.dumps({
+                    'statusCode': 402,
+                    'message': 'Wrong password'
+                })   
+        }
 
 # Test için
 event = {
@@ -89,6 +133,12 @@ event = {
         "time": "26/Nov/2023:06:59:33 +0000",
         "timeEpoch": 1700981973556
     },
-    "body": "{\r\n  \"body\": \"{\\\"username\\\": \\\"barisbeydemir\\\", \\\"password\\\": \\\"12345\\\"}\"\r\n}"
+    "body":   {
+        "username": "alpbeydemir",
+        "password": "blabla",
+        "requiredRoles": ["Admin", "ParkingSystemAdmin"] 
+    }  
+    
+    
 }
 lambda_handler(event, None)

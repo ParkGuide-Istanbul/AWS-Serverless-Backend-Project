@@ -5,7 +5,13 @@ AWS Serverless Backend Project of ParkGuide İstanbul Application
 
 #**************************************************************MANUEL DEPLOYU UNUTMA*****************************************************************************
 
-/login   ->   https://o11xc731wl.execute-api.eu-central-1.amazonaws.com/dev2/login  
+###******************************************************COK ONEMLI KENDIME NOT*****************************************************************************
+aws console da lambda da test ederken -> event['body'] kullan
+deploy ederken ->  json.loads(event['body'])  kullan
+son aşamada json.loads kalsın
+###**************************************************************************************
+
+###/login   ->   https://o11xc731wl.execute-api.eu-central-1.amazonaws.com/dev2/login  
 
 
 post request
@@ -15,11 +21,13 @@ body sample:
 
 ```
 {
-  "body": "{\"username\": \"alpbeydemir\", \"password\": \"samplepassword\"}"
+    "username": "alpbeydemir",
+    "password": "blabla",
+    "requiredRoles": ["Admin", "ParkingSystemAdmin"] 
 }
 ```
 
-/signup   ->   https://o11xc731wl.execute-api.eu-central-1.amazonaws.com/dev2/signup  
+###/signup   ->   https://o11xc731wl.execute-api.eu-central-1.amazonaws.com/dev2/signup  
 
 
 post request
@@ -27,12 +35,16 @@ post request
 
 ```
 {
-    "body": "{\"username\": \"alpbeydemir\", \"password\": \"12345\", \"email\": \"alpbeydemir@hotmail.com\"}"
+    "username": "alpbeydemir",
+    "password": "samplepassword",
+    "email": "alpbeydemir@hotmail.com",
+    "name": "Alp",
+    "surname": "Beydemir"
 }
 ```
 
 
-/verifycode   ->   https://o11xc731wl.execute-api.eu-central-1.amazonaws.com/dev2/verifycode
+###/verifycode   ->   https://o11xc731wl.execute-api.eu-central-1.amazonaws.com/dev2/verifycode
 
 
 post request
@@ -40,6 +52,80 @@ post request
 
 ```
 {
-    "body": "{\"username\": \"alpbeydemir\", \"password\": \"12345\", \"code\": \"402995\"}"
+    "username": "alpbeydemir",
+    "password": "12345",
+    "code": "402995"
 }
 ```
+
+###/forgotpassword   ->   https://o11xc731wl.execute-api.eu-central-1.amazonaws.com/dev2/forgotpassword
+
+
+post request
+
+
+```
+{
+    "email": "alpbeydemir@hotmail.com"
+}
+```
+
+###/resetpassword  ->   https://o11xc731wl.execute-api.eu-central-1.amazonaws.com/dev2/resetpassword
+
+
+post request
+
+
+```
+{
+    "username": "alpbeydemir",
+    "password": "samplepassword",
+    "email": "alpbeydemir@hotmail.com",
+    "code": "271296"
+}
+```
+
+
+### şifreler veritabanında hash lenmiş bir şekilde olduğu için şifreleri kaybetmemek adına şuanki kullanıcıları ve şifreleri aşağıya yazıyorum
+
+alpbeydemir -> "password": "samplepassword",
+devrim24 -> "password": "67890",
+yeni_kullanici -> "password": "yeni_sifre",
+barisbeydemir -> "password": "12345",
+
+
+### bu aşamadan sonra yazılan btün endpointlerde headers a Authorization eklenmesi zorunludur
+
+## örnek:
+
+![Alt text](image.png)
+
+## json formatında ise şu şekilde:
+
+{
+    "version": "2.0",
+
+    "headers": {
+        "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFscGJleWRlbWlyIiwicm9sZXMiOlsiU3RhbmRhcnRVc2VyIiwiQWRtaW4iXSwiZXhwIjoxNzAyNDI4MTIzfQ.B7f7J-DPULjvJCZKdZv8hD3GIIhOnvF5xdb794TumLA",
+        "accept": "*/*",
+        "accept-encoding": "gzip, deflate, br"
+    },
+    "requestContext": {
+        "accountId": "405996282404",
+        "apiId": "o11xc731wl"
+    },
+    "body": {
+        "username": "alpbeydemir",
+        "password": "samplepassword",
+        "code": "123456"
+    }
+        
+}
+
+
+###/listparks  ->   https://o11xc731wl.execute-api.eu-central-1.amazonaws.com/dev2/listparks
+
+get request
+
+## Authorization unutma
+
