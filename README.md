@@ -129,3 +129,23 @@ get request
 
 ## Authorization unutma
 
+###/configurestateparks  ->   https://o11xc731wl.execute-api.eu-central-1.amazonaws.com/dev2/configurestateparks
+
+post request
+
+
+
+```
+{
+         "parks":[
+             {
+                 "parkId": "1168",
+                 "state": "0"
+             },
+             {
+                 "parkId": "2381",
+                 "state": "1"
+             }
+         ]
+}
+```
