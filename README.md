@@ -87,12 +87,12 @@ post request
 
 
 ### şifreler veritabanında hash lenmiş bir şekilde olduğu için şifreleri kaybetmemek adına şuanki kullanıcıları ve şifreleri aşağıya yazıyorum
-
+```
 alpbeydemir -> "password": "samplepassword",
 devrim24 -> "password": "67890",
 yeni_kullanici -> "password": "yeni_sifre",
 barisbeydemir -> "password": "12345",
-
+```
 
 ### bu aşamadan sonra yazılan btün endpointlerde headers a Authorization eklenmesi zorunludur
 
