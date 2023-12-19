@@ -123,9 +123,67 @@ barisbeydemir -> "password": "12345",
 }
 
 
-###/listparks  ->   https://o11xc731wl.execute-api.eu-central-1.amazonaws.com/dev2/listparks
+###/listparks  ->   https://o11xc731wl.execute-api.eu-central-1.amazonaws.com/dev2/listparks        ----> admin panel için
 
 get request
 
 ## Authorization unutma
 
+###/configurestateparks  ->   https://o11xc731wl.execute-api.eu-central-1.amazonaws.com/dev2/configurestateparks       ----> admin panel için
+
+post request
+
+
+
+```
+{
+         "parks":[
+             {
+                 "parkId": "1168",
+                 "state": "0"
+             },
+             {
+                 "parkId": "2381",
+                 "state": "1"
+             }
+         ]
+}
+```
+
+
+###/getuserlist  ->   https://o11xc731wl.execute-api.eu-central-1.amazonaws.com/dev2/getuserlist      ----> admin panel için
+
+get request
+
+
+###/edituserlist  ->   https://o11xc731wl.execute-api.eu-central-1.amazonaws.com/dev2/edituserlist       ----> admin panel için
+
+post request
+```
+{
+    "editedUsers": [
+        {
+            "Username": "alpbeydemir",
+            "Name": "Alpp",
+            "Surname": "Beydemir",
+            "Mail": "alpbeydemir@hotmail.com",
+            "Roles": [
+                "Admin",
+                "StandardUser",
+                "ParkingSystemAdmin"
+            ]
+        },
+        {
+            "Username": "barisbeydemir",
+            "Name": "bariss",
+            "Surname": "Beydemir",
+            "Mail": "beydemir18@itu.edu.tr",
+            "Roles": [
+                "Admin",
+                "StandardUser",
+                "ParkingSystemAdmin"
+            ]
+        }
+    ]
+}
+```
