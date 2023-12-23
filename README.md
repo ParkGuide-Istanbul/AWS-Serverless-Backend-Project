@@ -190,6 +190,21 @@ post request
 
 
 
+###/getnearestparks  ->   https://o11xc731wl.execute-api.eu-central-1.amazonaws.com/dev2/getnearestparks       ----> mobil uygulama için
+
+post request
+
+```
+{
+        "district": "KADIKÖY", 
+        "lat": "40.9911", 
+        "lng": "29.0270"
+        
+}
+```
+
+
+
 ##***************************Kendime not*******************************
 
 pip3 install pyjwt --target=.\getuserlist\ --no-user

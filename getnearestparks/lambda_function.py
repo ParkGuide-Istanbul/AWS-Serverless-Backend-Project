@@ -66,7 +66,7 @@ def lambda_handler(event, context):
     
 
     try:
-        body =  event['body']         #   json.loads(event['body']) 
+        body =json.loads(event['body'])            #   event['body']
         input_district = body['district']
         input_lat = float(body['lat'])
         input_lng = float(body['lng'])
