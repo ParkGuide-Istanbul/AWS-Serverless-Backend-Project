@@ -47,6 +47,7 @@ district_adjacency = {
     "Ümraniye": ["Beykoz", "Çekmeköy", "Kadıköy", "Üsküdar", "Ataşehir", "Sancaktepe"],
     "Üsküdar": ["Beykoz", "Kadıköy", "Ümraniye", "Ataşehir"],
     "Zeytinburnu": ["Bakırköy", "Bayrampaşa", "Esenler", "Fatih", "Güngören", "Eyüp"],
+    "Ataşehir": ["Kadıköy", "Maltepe", "Pendik", "Sancaktepe", "Ümraniye"]
 }
 
 

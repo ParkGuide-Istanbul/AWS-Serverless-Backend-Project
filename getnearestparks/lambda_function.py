@@ -3,7 +3,9 @@ import requests
 from boto3.dynamodb.conditions import Attr
 import math
 import time
-
+import json
+import jwt
+SECRET_KEY = "Q56WTH4D98N1J2D5Z6U1UTKLDI4J5D6F"
 api_key = "AIzaSyDHkfZhEbOlIDyYyx0FiXF5K28VATsiVL0"   
 
 def get_travel_time(origin, destination):
@@ -44,14 +46,56 @@ def calculate_distance(lat1, lon1, lat2, lon2):
 
 
 def lambda_handler(event, context):
-    # ı want to print whole execution time sn unit
-    start_time = time.time()
-    # İBB API'den park verilerini çek
-    ibb_api_url = "https://api.ibb.gov.tr/ispark/Park"
-    parks_data = requests.get(ibb_api_url).json()
+
+
+    header = event['headers']              #  json.loads(event['headers'])
+    token = header['authorization-token']
+
+
+    # Token yoksa veya boşsa hata dön
+    if not token:
+        return unauthorized_response('No token provided')
+
+    try:
+        # Token'ı decode et
+        decoded_token = jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
+    except jwt.ExpiredSignatureError:
+        return unauthorized_response('Token expired')
+    except jwt.InvalidTokenError:
+        return unauthorized_response('Invalid token')
+    
+
+    try:
+        body =  event['body']         #   json.loads(event['body']) 
+        input_district = body['district']
+        input_lat = float(body['lat'])
+        input_lng = float(body['lng'])
+    except (KeyError, TypeError, json.JSONDecodeError):
+        return {
+            'statusCode': 400,
+            'body': json.dumps({'message': 'Bad request format'})
+        }
+    
+
+    try:
+        # İBB API'den park verilerini çekmeye çalış
+        ibb_api_url = "https://api.ibb.gov.tr/ispark/Park"
+        parks_data = requests.get(ibb_api_url).json()
+    except requests.exceptions.RequestException:
+        # Eğer hata oluşursa, verileri DynamoDB'den çek
+        dynamodb = boto3.resource('dynamodb')
+        table = dynamodb.Table('Parks_cache')
+        response = table.scan()
+        parks_data = response['Items']
+        if not parks_data:
+            return {
+                'statusCode': 503,
+                'body': json.dumps({'message': 'Failed to fetch park data from both API and cache'})
+            }
+
 
     # Event'ten ilçe bilgisini al
-    input_district = event.get("district")
+
 
     # DynamoDB'den ilçenin komşu ilçelerini çek
     dynamodb = boto3.resource('dynamodb')
@@ -70,13 +114,12 @@ def lambda_handler(event, context):
     filtered_parks = []
     for park in parks_data:
         if (park['district'] in districts_to_filter and 
-            park['isOpen'] == 1 and 
-            park['emptyCapacity'] != 0 and 
+            (park['isOpen'] == 1  or park['isOpen'] == '1') and 
+            (park['emptyCapacity'] != 0 or park['emptyCapacity'] != '0') and 
             str(park['parkID']) not in inactive_park_ids):
             filtered_parks.append(park)
 
-    input_lat = float(event.get("lat"))
-    input_lng = float(event.get("lng"))
+
 
     for park in filtered_parks:
         park_lat = float(park['lat'])
@@ -85,17 +128,53 @@ def lambda_handler(event, context):
 
     sorted_filtered_parks = sorted(filtered_parks, key=lambda x: x['distance'])
 
-    #ilk 20 i al
 
-    sorted_filtered_parks = sorted_filtered_parks[:15]
 
-    
+    sorted_filtered_parks = sorted_filtered_parks[:10]
 
     for park in sorted_filtered_parks:
-        park['Time'],park['distance2'] = get_travel_time(f"{input_lat},{input_lng}", f"{park['lat']},{park['lng']}")
+        park['Time'] = get_travel_time(str(input_lat) + "," + str(input_lng), str(park['lat']) + "," + str(park['lng']))[0]
+        park['MapsURL'] = "https://www.google.com/maps/dir/?api=1&origin=" + str(input_lat) + "," + str(input_lng) + "&destination=" + str(park['lat']) + "," + str(park['lng']) + "&travelmode=driving"
     print(sorted_filtered_parks)
-    print("--- %s seconds ---" % (time.time() - start_time))
-    return sorted_filtered_parks
+
+    return {
+        'statusCode': 200,
+        'body': json.dumps(sorted_filtered_parks)
+    }
 
 
-lambda_handler({"district": "SARIYER","lat":"41.0416","lng":"28.8946"}, None)
+def unauthorized_response(message):
+    return {
+        'statusCode': 401,
+        'body': json.dumps({'message': message})
+    }
+
+
+event = {
+    "version": "2.0",
+    "routeKey": "POST /login",
+    "rawPath": "/dev2/login",
+    "rawQueryString": "",
+    "headers": {
+        "authorization-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRldnJpbTI0Iiwicm9sZXMiOlsiU3RhbmRhcnRVc2VyIiwiQWRtaW4iXSwiZXhwIjoxNzAzMzczMDg3fQ.ai9BbHLfzMua75HTACKcxnDVPk1oSZx4tPSUZo9xCCo",
+        "__requestverificationtoken": "3NAMpH5Gl6HAgNOKrfrWOuDcg0g3Z-2yZzscrBLJXEImvN0VY3zaRNVtMgVM5UMcIa3yTwJYiAaxES5BH6uX5Zl_UEzwBJtA5lYYx8RpVECnRdbMQaVDqHEuhPkir82aWn6c4A2",
+        "accept": "*/*",
+        "accept-encoding": "gzip, deflate, br"
+    },
+    "requestContext": {
+        "accountId": "405996282404",
+        "apiId": "o11xc731wl"
+    },
+    "body": {
+        "district": "KADIKÖY", 
+        "lat": "40.9911", 
+        "lng": "29.0270"
+        
+    }
+        
+}
+
+
+response = lambda_handler(event, None)
+
+print(response)
