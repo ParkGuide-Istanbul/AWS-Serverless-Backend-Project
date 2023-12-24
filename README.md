@@ -237,6 +237,22 @@ get request
 o an aktive olan jourey sini bitiriyor, ya da iptal ediyor. İptal ve bitirme işlemi için aynı endpoint kullanılacak.
 
 
+###/controljourney  ->   https://o11xc731wl.execute-api.eu-central-1.amazonaws.com/dev2/controljourney     ----> mobil uygulama için
+
+post request
+
+```
+{
+    "district": "SARIYER",
+    "lat": "41.1664",
+    "lng": "29.0503"
+}
+```
+kullanıcının o anki konumu post request ile gönderilir. kullanıcının journey destination ına yaklaşıp yaklaşmadığına göre cevap döner. Eğer yaklaşmışsa yakınındaki 10 müsait park yeri en yakın olandan en uzak olana doğru sıralanır.
+
+bu endpoint notification için kullanılmak üzere tasarlandı. Kullanıcı uygulamadayken arkaplanda 5 dk kadar bir request atılır endpointe. Nezaman requestin reponse ında parklar listelenir ve status kosu 200 dönerse, kullanıcıya notification çıkartılır.
+
+
 
 ##***************************Kendime not*******************************
 
