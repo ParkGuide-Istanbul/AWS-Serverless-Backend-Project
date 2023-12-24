@@ -5,10 +5,30 @@ import jwt
 from boto3.dynamodb.conditions import Attr, Key
 import requests
 import time
-
+from botocore.exceptions import ClientError
 
 SECRET_KEY = "Q56WTH4D98N1J2D5Z6U1UTKLDI4J5D6F"
 api_key = "AIzaSyDHkfZhEbOlIDyYyx0FiXF5K28VATsiVL0"
+
+def update_journey_as_finished(journey_id):
+    try:
+        dynamodb = boto3.resource('dynamodb')
+        table = dynamodb.Table('Journeys')
+
+        # 'IsFinished' değerini '1' olarak güncelle
+        table.update_item(
+            Key={
+                'JourneyId': journey_id
+            },
+            UpdateExpression='SET IsFinished = :val',
+            ExpressionAttributeValues={
+                ':val': '1'
+            }
+        )
+        return True
+    except ClientError:
+        # Eğer bir hata oluşursa False döndür
+        return False
 
 def get_travel_time(origin, destination):
     url = "https://maps.googleapis.com/maps/api/directions/json"
@@ -69,7 +89,7 @@ def lambda_handler(event, context):
     if not user:
         return unauthorized_response('User not found in token')
     try:
-        body = event['body']    #  json.loads(event['body'])
+        body = json.loads(event['body'])    #  event['body'] 
         current_district = body['district']
         current_lat = float(body['lat'])
         current_lng = float(body['lng'])
@@ -175,7 +195,12 @@ def lambda_handler(event, context):
         print(sorted_filtered_parks)
 
 
-
+    result = update_journey_as_finished(journey_id)
+    if not result:
+        return {
+            'statusCode': 500,
+            'body': json.dumps({'message': 'Failed to update journey'})
+        }
 
     return {
         'statusCode': 200,
@@ -208,9 +233,9 @@ event = {
         "apiId": "o11xc731wl"
     },
     "body": {
-        "district": "KADIKÖY", 
-        "lat": "40.9911", 
-        "lng": "29.0270"
+        "district": "SARIYER", 
+        "lat": "41.1664", 
+        "lng": "29.0503"
         
     }
         
