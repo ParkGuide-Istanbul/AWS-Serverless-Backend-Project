@@ -19,9 +19,12 @@ table = dynamodb.Table('Users')
 def lambda_handler(event, context):
     # Kullanıcı bilgilerini al
 
-    body =  json.loads(event['body'])       #  event['body'] 
+    body = json.loads(event['body'])        
+
     username = body['username']
+
     password = body['password']
+ 
     recipient_email = body['email']
     name = body['name']  
     surname = body['surname']  
@@ -89,7 +92,8 @@ def lambda_handler(event, context):
                 'Surname': surname,  
                 'IsVerified': '0',
                 'Roles': {"StandartUser"},
-                'Code': code 
+                'Code': code,
+                'IsInJourney': '0'
             }
         )
 
@@ -137,29 +141,29 @@ def lambda_handler(event, context):
 
 # Test için örnek event
 
-event = {
-    "version": "2.0",
-    "routeKey": "POST /login",
-    "rawPath": "/dev2/login",
-    "rawQueryString": "",
-    "headers": {
-        "__requestverificationtoken": "3NAMpH5Gl6HAgNOKrfrWOuDcg0g3Z-2yZzscrBLJXEImvN0VY3zaRNVtMgVM5UMcIa3yTwJYiAaxES5BH6uX5Zl_UEzwBJtA5lYYx8RpVECnRdbMQaVDqHEuhPkir82aWn6c4A2",
-        "accept": "*/*",
-        "accept-encoding": "gzip, deflate, br"
-    },
-    "requestContext": {
-        "accountId": "405996282404",
-        "apiId": "o11xc731wl"
-    },
-    "body": {
-        "username": "alpbeydemir",
-        "password": "samplepassword",
-        "email": "alpbeydemir@hotmail.com",
-        "name": "Alp",
-        "surname": "Beydemir"
+# event = {
+#     "version": "2.0",
+#     "routeKey": "POST /login",
+#     "rawPath": "/dev2/login",
+#     "rawQueryString": "",
+#     "headers": {
+#         "__requestverificationtoken": "3NAMpH5Gl6HAgNOKrfrWOuDcg0g3Z-2yZzscrBLJXEImvN0VY3zaRNVtMgVM5UMcIa3yTwJYiAaxES5BH6uX5Zl_UEzwBJtA5lYYx8RpVECnRdbMQaVDqHEuhPkir82aWn6c4A2",
+#         "accept": "*/*",
+#         "accept-encoding": "gzip, deflate, br"
+#     },
+#     "requestContext": {
+#         "accountId": "405996282404",
+#         "apiId": "o11xc731wl"
+#     },
+#     "body": {
+#         "username": "alpbeydemir",
+#         "password": "samplepassword",
+#         "email": "alpbeydemir@hotmail.com",
+#         "name": "Alp",
+#         "surname": "Beydemir"
 
-    }
+#     }
     
-}
+# }
 
-lambda_handler(event, None)
+# lambda_handler(event, None)
