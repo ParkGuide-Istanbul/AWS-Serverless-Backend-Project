@@ -202,6 +202,10 @@ post request
         
 }
 ```
+en yakın müsait 10 park bilgeleri obje listesi olarak dönüyor
+
+
+![Alt text](image-1.png)
 
 
 
