@@ -60,7 +60,7 @@ def lambda_handler(event, context):
 
     # Request body'den yolculuk bilgilerini al
     try:
-        body = event['body']          #json.loads(event['body'])   
+        body =json.loads(event['body'])              #event['body']
         starting = body['starting']
         destination = body['destination']
     except (KeyError, TypeError, json.JSONDecodeError):
