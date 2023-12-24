@@ -253,6 +253,20 @@ kullanıcının o anki konumu post request ile gönderilir. kullanıcının jour
 bu endpoint notification için kullanılmak üzere tasarlandı. Kullanıcı uygulamadayken arkaplanda 5 dk kadar bir request atılır endpointe. Nezaman requestin reponse ında parklar listelenir ve status kosu 200 dönerse, kullanıcıya notification çıkartılır.
 
 
+###/sendreport  ->   https://o11xc731wl.execute-api.eu-central-1.amazonaws.com/dev2/sendreport     ----> mobil uygulama için
+
+post request
+
+```
+{
+    "Content": "sampletopic",
+    "ReportTopic": "samplecontent"
+}
+```
+
+kullanıcıların adminlere bir şeyi reportlayabilmesi için oluşturulmuş endpoint
+
+
 
 ##***************************Kendime not*******************************
 
