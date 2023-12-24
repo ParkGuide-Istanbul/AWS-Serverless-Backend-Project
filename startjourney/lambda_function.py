@@ -1,19 +1,21 @@
-import json
 import boto3
+import json
 import jwt
 from botocore.exceptions import ClientError
 from uuid import uuid4
-from cryptography.fernet import Fernet
+# from cryptography.fernet import Fernet
 
 # Anahtar oluştur
-key = b'Z6U2DI4J5D6FUTKLDQ5T16W8N1JH4D95'
+# key = b'nmRt2Bxw3KblYQNlzAfFlisoejkJ4Tfv4eQlOuyegw8='
+# key = Fernet.generate_key()
+# print(key)
 
 # Fernet örneği oluştur
-fernet = Fernet(key)
+# fernet = Fernet(key)
 
 # DynamoDB ve JWT ayarları
 dynamodb = boto3.resource('dynamodb')
-journey_table = dynamodb.Table('Journey')
+journey_table = dynamodb.Table('Journeys')
 SECRET_KEY = 'Q56WTH4D98N1J2D5Z6U1UTKLDI4J5D6F'  # Gerçek uygulamada güvenli bir şekilde saklayın
 
 def encrypt_data(data):
@@ -23,7 +25,10 @@ def encrypt_data(data):
 def check_active_journey(user):
     """Belirtilen kullanıcının aktif yolculuğunu kontrol et."""
     response = journey_table.scan(
-        FilterExpression='User = :user and IsFinished = :isFinished',
+        FilterExpression='#usr = :user and IsFinished = :isFinished',
+        ExpressionAttributeNames={
+            '#usr': 'User'  # 'User' için takma ad
+        },
         ExpressionAttributeValues={
             ':user': user,
             ':isFinished': '0'
@@ -55,7 +60,7 @@ def lambda_handler(event, context):
 
     # Request body'den yolculuk bilgilerini al
     try:
-        body = json.loads(event['body'])
+        body = event['body']          #json.loads(event['body'])   
         starting = body['starting']
         destination = body['destination']
     except (KeyError, TypeError, json.JSONDecodeError):
@@ -75,10 +80,10 @@ def lambda_handler(event, context):
     new_journey = {
         'JourneyId': str(uuid4()),
         'User': user,
-        'StartingDistrict': encrypt_data(starting['startingdistrict']),
-        'StartingLocation(lat-lng)': encrypt_data(f"{starting['startinglat']}-{starting['startinglng']}"),
-        'DestinationDistrict': encrypt_data(destination['destinationdistrict']),
-        'DestinationLocation(lat-lng)': encrypt_data(f"{destination['destinationlat']}-{destination['destinationlng']}"),
+        'StartingDistrict': starting['startingdistrict'],
+        'StartingLocation(lat-lng)': f"{starting['startinglat']}-{starting['startinglng']}",
+        'DestinationDistrict': destination['destinationdistrict'],
+        'DestinationLocation(lat-lng)': f"{destination['destinationlat']}-{destination['destinationlng']}",
         'IsFinished': '0'
     }
 
@@ -109,7 +114,7 @@ event = {
     "rawPath": "/dev2/login",
     "rawQueryString": "",
     "headers": {
-        "authorization-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRldnJpbTI0Iiwicm9sZXMiOlsiU3RhbmRhcnRVc2VyIiwiQWRtaW4iXSwiZXhwIjoxNzAzMzczMDg3fQ.ai9BbHLfzMua75HTACKcxnDVPk1oSZx4tPSUZo9xCCo",
+        "authorization-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRldnJpbTI0Iiwicm9sZXMiOlsiQWRtaW4iLCJTdGFuZGFydFVzZXIiXSwiZXhwIjoxNzAzNDA0NTgzfQ.6VWgyEulr6oFuleeydx5mySuA5KrVKiTuEDaHxiYhuU",
         "__requestverificationtoken": "3NAMpH5Gl6HAgNOKrfrWOuDcg0g3Z-2yZzscrBLJXEImvN0VY3zaRNVtMgVM5UMcIa3yTwJYiAaxES5BH6uX5Zl_UEzwBJtA5lYYx8RpVECnRdbMQaVDqHEuhPkir82aWn6c4A2",
         "accept": "*/*",
         "accept-encoding": "gzip, deflate, br"
@@ -119,7 +124,7 @@ event = {
         "apiId": "o11xc731wl"
     },
     "body": {
-        {   "starting": {
+           "starting": {
                 "startingdistrict": "KADIKÖY",
                 "startinglat": "40.9911",
                 "startinglng": "29.0270"
@@ -129,7 +134,7 @@ event = {
                 "destinationlat": "40.9911",
                 "destinationlng": "29.0270"
         }
-    }
+    
         
     }
         
