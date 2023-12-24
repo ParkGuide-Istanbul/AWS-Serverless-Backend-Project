@@ -20,6 +20,17 @@ def encrypt_data(data):
     """Verilen veriyi şifrele."""
     return fernet.encrypt(data.encode()).decode()
 
+def check_active_journey(user):
+    """Belirtilen kullanıcının aktif yolculuğunu kontrol et."""
+    response = journey_table.scan(
+        FilterExpression='User = :user and IsFinished = :isFinished',
+        ExpressionAttributeValues={
+            ':user': user,
+            ':isFinished': '0'
+        }
+    )
+    return 'Items' in response and len(response['Items']) > 0
+
 def lambda_handler(event, context):
     # Token'ı Authorization header'ından al
     header = event['headers']
@@ -51,6 +62,12 @@ def lambda_handler(event, context):
         return {
             'statusCode': 400,
             'body': json.dumps({'message': 'Bad request format'})
+        }
+    
+    if check_active_journey(user):
+        return {
+            'statusCode': 400,
+            'body': json.dumps({'message': 'User already has an active journey'})
         }
 
     # Yeni bir Journey kaydı oluştur
