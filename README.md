@@ -208,6 +208,35 @@ en yakın müsait 10 park bilgeleri obje listesi olarak dönüyor
 ![Alt text](image-1.png)
 
 
+###/startjourney  ->   https://o11xc731wl.execute-api.eu-central-1.amazonaws.com/dev2/startjourney      ----> mobil uygulama için
+
+post request
+
+```
+{
+    "starting": {
+        "startingdistrict": "KADIKÖY",
+        "startinglat": "40.9911",
+        "startinglng": "29.0270"
+    },
+    "destination": {
+        "destinationdistrict": "SARIYER",
+        "destinationlat": "40.9911",
+        "destinationlng": "29.0270"
+    }
+}
+```
+
+o anki kendi konumunu "starting" in içine giriyor ilçe ile beraber, destination a da gitmek istediği lokasyonun konumunu ve ilçesini giriyor 
+
+
+###/finishjourney ->   https://o11xc731wl.execute-api.eu-central-1.amazonaws.com/dev2/finishjourney     ----> mobil uygulama için
+
+get request
+
+o an aktive olan jourey sini bitiriyor, ya da iptal ediyor. İptal ve bitirme işlemi için aynı endpoint kullanılacak.
+
+
 
 ##***************************Kendime not*******************************
 
