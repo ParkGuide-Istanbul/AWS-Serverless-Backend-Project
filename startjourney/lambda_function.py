@@ -6,7 +6,7 @@ from uuid import uuid4
 from cryptography.fernet import Fernet
 
 # Anahtar oluştur
-
+key = b'Z6U2DI4J5D6FUTKLDQ5T16W8N1JH4D95'
 
 # Fernet örneği oluştur
 fernet = Fernet(key)
@@ -85,3 +85,40 @@ def unauthorized_response(message):
         'statusCode': 401,
         'body': json.dumps({'message': message})
     }
+
+event = {
+    "version": "2.0",
+    "routeKey": "POST /login",
+    "rawPath": "/dev2/login",
+    "rawQueryString": "",
+    "headers": {
+        "authorization-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRldnJpbTI0Iiwicm9sZXMiOlsiU3RhbmRhcnRVc2VyIiwiQWRtaW4iXSwiZXhwIjoxNzAzMzczMDg3fQ.ai9BbHLfzMua75HTACKcxnDVPk1oSZx4tPSUZo9xCCo",
+        "__requestverificationtoken": "3NAMpH5Gl6HAgNOKrfrWOuDcg0g3Z-2yZzscrBLJXEImvN0VY3zaRNVtMgVM5UMcIa3yTwJYiAaxES5BH6uX5Zl_UEzwBJtA5lYYx8RpVECnRdbMQaVDqHEuhPkir82aWn6c4A2",
+        "accept": "*/*",
+        "accept-encoding": "gzip, deflate, br"
+    },
+    "requestContext": {
+        "accountId": "405996282404",
+        "apiId": "o11xc731wl"
+    },
+    "body": {
+        {   "starting": {
+                "startingdistrict": "KADIKÖY",
+                "startinglat": "40.9911",
+                "startinglng": "29.0270"
+        },
+            "destination":{
+                "destinationdistrict": "SARIYER",
+                "destinationlat": "40.9911",
+                "destinationlng": "29.0270"
+        }
+    }
+        
+    }
+        
+}
+
+
+response = lambda_handler(event, None)
+
+print(response)
