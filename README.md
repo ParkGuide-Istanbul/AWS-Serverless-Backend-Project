@@ -26,6 +26,25 @@ body sample:
     "requiredRoles": ["Admin", "ParkingSystemAdmin"] 
 }
 ```
+örnek dönüş değerleri şu şekilde:
+```
+{
+    "statusCode": 200,
+    "message": {
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRldnJpbTI0Iiwicm9sZXMiOlsiU3RhbmRhcnRVc2VyIiwiQWRtaW4iXSwiZXhwIjoxNzAzNDIwMTUxfQ.HXDcLRJFM1_qGiYVD83EeQwJXifZS1eoN6q0vv67kl0",
+        "username": "devrim24",
+        "name": "Devrim",
+        "surname": "Kafadar",
+        "roles": [
+            "StandartUser",
+            "Admin"
+        ],
+        "IsInJourney": "0"
+    }
+}
+```
+
+IsInJourney değeri ekledim. eğer kullanıcı uygulamayı açtığında daha önce başlattığı bir journey i bitirmemişse ona göre bazı yerleri nonclikeble yapabilirsiniz.
 
 ###/signup   ->   https://o11xc731wl.execute-api.eu-central-1.amazonaws.com/dev2/signup  
 
