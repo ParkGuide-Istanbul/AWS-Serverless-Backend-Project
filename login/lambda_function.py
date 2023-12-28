@@ -81,7 +81,8 @@ def lambda_handler(event, context):
                         'username': response['Item']['Username'],
                         'name': response['Item'].get('Name', 'Not Available'),  # Eğer Name yoksa
                         'surname': response['Item'].get('Surname', 'Not Available'),  # Eğer Surname yoksa
-                        'roles': list(response['Item']['Roles'])
+                        'roles': list(response['Item']['Roles']),
+                        'IsInJourney': response['Item'].get('IsInJourney', '0'),  # Eğer IsInJourney yoksa
                     }
                 })
             
@@ -96,49 +97,49 @@ def lambda_handler(event, context):
         }
 
 # Test için
-event = {
-    "version": "2.0",
-    "routeKey": "POST /login",
-    "rawPath": "/dev2/login",
-    "rawQueryString": "",
-    "headers": {
-        "__requestverificationtoken": "3NAMpH5Gl6HAgNOKrfrWOuDcg0g3Z-2yZzscrBLJXEImvN0VY3zaRNVtMgVM5UMcIa3yTwJYiAaxES5BH6uX5Zl_UEzwBJtA5lYYx8RpVECnRdbMQaVDqHEuhPkir82aWn6c4A2",
-        "accept": "*/*",
-        "accept-encoding": "gzip, deflate, br",
-        "content-length": "83",
-        "content-type": "application/json",
-        "host": "o11xc731wl.execute-api.eu-central-1.amazonaws.com",
-        "postman-token": "27036ed8-9f14-4d6c-a975-9d327cbf5915",
-        "user-agent": "PostmanRuntime/7.32.3",
-        "x-amzn-trace-id": "Root=1-6562ecd5-1db19ea53bf92fdc7acae38d",
-        "x-forwarded-for": "78.180.71.41",
-        "x-forwarded-port": "443",
-        "x-forwarded-proto": "https"
-    },
-    "requestContext": {
-        "accountId": "405996282404",
-        "apiId": "o11xc731wl",
-        "domainName": "o11xc731wl.execute-api.eu-central-1.amazonaws.com",
-        "domainPrefix": "o11xc731wl",
-        "http": {
-            "method": "POST",
-            "path": "/dev2/login",
-            "protocol": "HTTP/1.1",
-            "sourceIp": "78.180.71.41",
-            "userAgent": "PostmanRuntime/7.32.3"
-        },
-        "requestId": "O_nxaiSCFiAEJLw=",
-        "routeKey": "POST /login",
-        "stage": "dev2",
-        "time": "26/Nov/2023:06:59:33 +0000",
-        "timeEpoch": 1700981973556
-    },
-    "body":   {
-        "username": "alpbeydemir",
-        "password": "blabla",
-        "requiredRoles": ["Admin", "ParkingSystemAdmin"] 
-    }  
+# event = {
+#     "version": "2.0",
+#     "routeKey": "POST /login",
+#     "rawPath": "/dev2/login",
+#     "rawQueryString": "",
+#     "headers": {
+#         "__requestverificationtoken": "3NAMpH5Gl6HAgNOKrfrWOuDcg0g3Z-2yZzscrBLJXEImvN0VY3zaRNVtMgVM5UMcIa3yTwJYiAaxES5BH6uX5Zl_UEzwBJtA5lYYx8RpVECnRdbMQaVDqHEuhPkir82aWn6c4A2",
+#         "accept": "*/*",
+#         "accept-encoding": "gzip, deflate, br",
+#         "content-length": "83",
+#         "content-type": "application/json",
+#         "host": "o11xc731wl.execute-api.eu-central-1.amazonaws.com",
+#         "postman-token": "27036ed8-9f14-4d6c-a975-9d327cbf5915",
+#         "user-agent": "PostmanRuntime/7.32.3",
+#         "x-amzn-trace-id": "Root=1-6562ecd5-1db19ea53bf92fdc7acae38d",
+#         "x-forwarded-for": "78.180.71.41",
+#         "x-forwarded-port": "443",
+#         "x-forwarded-proto": "https"
+#     },
+#     "requestContext": {
+#         "accountId": "405996282404",
+#         "apiId": "o11xc731wl",
+#         "domainName": "o11xc731wl.execute-api.eu-central-1.amazonaws.com",
+#         "domainPrefix": "o11xc731wl",
+#         "http": {
+#             "method": "POST",
+#             "path": "/dev2/login",
+#             "protocol": "HTTP/1.1",
+#             "sourceIp": "78.180.71.41",
+#             "userAgent": "PostmanRuntime/7.32.3"
+#         },
+#         "requestId": "O_nxaiSCFiAEJLw=",
+#         "routeKey": "POST /login",
+#         "stage": "dev2",
+#         "time": "26/Nov/2023:06:59:33 +0000",
+#         "timeEpoch": 1700981973556
+#     },
+#     "body":   {
+#         "username": "alpbeydemir",
+#         "password": "blabla",
+#         "requiredRoles": ["Admin", "ParkingSystemAdmin"] 
+#     }  
     
     
-}
-lambda_handler(event, None)
+# }
+# lambda_handler(event, None)
