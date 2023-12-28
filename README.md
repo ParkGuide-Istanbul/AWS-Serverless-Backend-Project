@@ -287,6 +287,14 @@ kullanıcıların adminlere bir şeyi reportlayabilmesi için oluşturulmuş end
 
 
 
+###/getjourneys  ->   https://o11xc731wl.execute-api.eu-central-1.amazonaws.com/dev2/getjourneys      ----> admin panel için
+
+get request
+
+bütün journey leri bilgileri ile beraber liste şeklinde veren endpoint, bunu liste halinde gösterirken backend in döndüğü journeyid yi kullanmayın kötü gözükür, onu js dosyası içinde variable lara atıp kendiniz id bastırıp gösterebilirsiniz.
+
+
+
 ##***************************Kendime not*******************************
 
 pip3 install pyjwt --target=.\getuserlist\ --no-user
