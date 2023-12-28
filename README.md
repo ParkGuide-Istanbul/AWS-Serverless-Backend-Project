@@ -294,6 +294,13 @@ get request
 bütün journey leri bilgileri ile beraber liste şeklinde veren endpoint, bunu liste halinde gösterirken backend in döndüğü journeyid yi kullanmayın kötü gözükür, onu js dosyası içinde variable lara atıp kendiniz id bastırıp gösterebilirsiniz.
 
 
+###/getreports  ->   https://o11xc731wl.execute-api.eu-central-1.amazonaws.com/dev2/getreports      ----> admin panel için
+
+get request
+
+Bütün raporlar bu endpoint ile listelenebiliyor, sadece Admin rolüne sahip kullanıcılar bu endpointe istek atabilir
+
+
 
 ##***************************Kendime not*******************************
 
