@@ -19,7 +19,7 @@ table = dynamodb.Table('Users')
 def lambda_handler(event, context):
     # Kullanıcı bilgilerini al
 
-    body = json.loads(event['body'])        
+    body =   json.loads(event['body'])        #event['body']
 
     username = body['username']
 
@@ -91,7 +91,7 @@ def lambda_handler(event, context):
                 'Name': name,  
                 'Surname': surname,  
                 'IsVerified': '0',
-                'Roles': {"StandartUser"},
+                'Roles': ['StandardUser'] ,
                 'Code': code,
                 'IsInJourney': '0'
             }
@@ -139,7 +139,7 @@ def lambda_handler(event, context):
                 })   
         }
 
-# Test için örnek event
+
 
 # event = {
 #     "version": "2.0",
@@ -156,11 +156,11 @@ def lambda_handler(event, context):
 #         "apiId": "o11xc731wl"
 #     },
 #     "body": {
-#         "username": "alpbeydemir",
-#         "password": "samplepassword",
-#         "email": "alpbeydemir@hotmail.com",
-#         "name": "Alp",
-#         "surname": "Beydemir"
+#         "username": "alpbeydemir2",
+#         "password": "samplepassword2",
+#         "email": "mahmutizel@hotmail.com",
+#         "name": "Mahmut",
+#         "surname": "Izel"
 
 #     }
     

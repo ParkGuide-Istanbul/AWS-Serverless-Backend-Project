@@ -111,6 +111,7 @@ alpbeydemir -> "password": "samplepassword",
 devrim24 -> "password": "67890",
 yeni_kullanici -> "password": "yeni_sifre",
 barisbeydemir -> "password": "12345",
+alpbeydemir -> "password": "samplepassword2"
 ```
 
 ### bu aşamadan sonra yazılan btün endpointlerde headers a Authorization eklenmesi zorunludur
