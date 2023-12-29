@@ -4,15 +4,35 @@ import boto3
 from botocore.exceptions import ClientError
 
 # Örnek isim ve soyisim listeleri
-first_names = ["James", "Mary", "Robert", "Patricia", "John", "Jennifer"]
-last_names = ["Smith", "Johnson", "Williams", "Brown", "Jones", "Garcia"]
+first_names = [
+    "Ahmet", "Mehmet", "Mustafa", "Ayşe", "Fatma", "Elif", 
+    "Emre", "Yusuf", "Merve", "Zeynep", "Kübra", "Ömer", 
+    "Ali", "Cem", "Deniz", "Esra", "Gizem", "Hakan", 
+    "İrem", "Kaan", "Lale", "Murat", "Nihal", "Onur", 
+    "Pelin", "Rüya", "Selin", "Tolga", "Umut", "Volkan", 
+    "Yeliz", "Zafer", "Aslı", "Burak", "Ceren", "Doruk", 
+    "Ece", "Furkan", "Gözde", "Hande", "Işıl", "Koray", 
+    "Leyla", "Mert", "Naz", "Oğuz", "Pınar", "Recep", 
+    "Sena", "Tarık", "Ufuk", "Vildan", "Yasin", "Zehra"
+]
+
+last_names = [
+    "Yılmaz", "Demir", "Kaya", "Şahin", "Çelik", "Aydın", 
+    "Öztürk", "Arslan", "Doğan", "Altın", "Kara", "Güneş", 
+    "Koç", "Güler", "Tekin", "Akar", "Çetin", "Kılıç", 
+    "Aslan", "Çakır", "Can", "Türk", "Polat", "Yıldız", 
+    "Kurt", "Erdoğan", "Özdemir", "Çetinkaya", "Şimşek", "Korkmaz", 
+    "Sarı", "Uzun", "Özkan", "Taş", "Keskin", "Aksoy", 
+    "Keser", "Demirci", "Özer", "Çoban", "Yıldırım", "Ateş", 
+    "Yavuz", "Koçak", "Durmaz", "Özçelik", "Kaplan", "Çiftçi"
+]
 
 # Rol seçenekleri
 roles = ["Admin", "StandardUser", "ParkingSystemAdmin"]
 
 # Rastgele rol üretme fonksiyonu
 def random_roles():
-    return [{"S": role} for role in random.sample(roles, random.randint(1, len(roles)))]
+    return random.sample(roles, random.randint(1, len(roles)))
 
 # Rastgele kullanıcı adı ve e-posta adresi üretme fonksiyonları
 def random_username(first_name, last_name):
@@ -31,7 +51,7 @@ table = dynamodb.Table(dynamodb_table_name)
 user_credentials = []
 user_data = []
 
-for _ in range(100):  # 100 adet kullanıcı üret
+for _ in range(200):  # 200 adet kullanıcı üret
     first_name = random.choice(first_names)
     last_name = random.choice(last_names)
     username = random_username(first_name, last_name)
@@ -46,7 +66,7 @@ for _ in range(100):  # 100 adet kullanıcı üret
         "Mail": random_email(first_name, last_name),
         "Name": first_name,
         "Password": hashed_password,
-        "Roles": {"S": random_roles()},
+        "Roles": random_roles(),
         "Surname": last_name
     }
 
@@ -64,5 +84,5 @@ for _ in range(100):  # 100 adet kullanıcı üret
 
 
 print("\nUser Credentials:")
-for credential in user_credentials[:5]:
+for credential in user_credentials:
     print(credential)
