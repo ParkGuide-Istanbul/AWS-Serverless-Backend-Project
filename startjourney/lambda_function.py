@@ -3,6 +3,7 @@ import json
 import jwt
 from botocore.exceptions import ClientError
 from uuid import uuid4
+from datetime import datetime
 # from cryptography.fernet import Fernet
 
 # Anahtar oluştur
@@ -74,17 +75,23 @@ def lambda_handler(event, context):
             'statusCode': 400,
             'body': json.dumps({'message': 'User already has an active journey'})
         }
+    
+    current_utc_time = datetime.utcnow()
+    journey_start_time = current_utc_time.strftime('%Y-%m-%dT%H:%M:%SZ')
+    journey_day_of_week = current_utc_time.strftime('%A')
 
     # Yeni bir Journey kaydı oluştur
     new_journey_id = str(uuid4())  # Benzersiz bir ID oluştur
     new_journey = {
-        'JourneyId': str(uuid4()),
+        'JourneyId': new_journey_id,
         'User': user,
         'StartingDistrict': starting['startingdistrict'],
         'StartingLocation(lat-lng)': f"{starting['startinglat']}-{starting['startinglng']}",
         'DestinationDistrict': destination['destinationdistrict'],
         'DestinationLocation(lat-lng)': f"{destination['destinationlat']}-{destination['destinationlng']}",
-        'IsFinished': '0'
+        'IsFinished': '0',
+        'StartTime': journey_start_time,
+        'DayOfWeek': journey_day_of_week
     }
 
     try:
