@@ -301,6 +301,13 @@ get request
 Bütün raporlar bu endpoint ile listelenebiliyor, sadece Admin rolüne sahip kullanıcılar bu endpointe istek atabilir
 
 
+###/getquicksearchresults  ->   https://o11xc731wl.execute-api.eu-central-1.amazonaws.com/dev2/getquicksearchresults      ----> mobil uygulama için
+
+get request
+
+kullanıcının en sık gittiği 4 destinarion lat-lng-district
+
+
 
 ##***************************Kendime not*******************************
 
