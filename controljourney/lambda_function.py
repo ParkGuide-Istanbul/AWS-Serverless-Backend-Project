@@ -10,6 +10,14 @@ from botocore.exceptions import ClientError
 SECRET_KEY = "Q56WTH4D98N1J2D5Z6U1UTKLDI4J5D6F"
 api_key = "AIzaSyDHkfZhEbOlIDyYyx0FiXF5K28VATsiVL0"
 
+
+def calculate_and_format_time(distance):
+    # Hesaplama: (distance/5)*7) / 0.25 ve en yakın integer değere yuvarlama
+    time_in_minutes = round((distance / 5) * 7 / 0.25)
+
+    # Sonucu string olarak ".. mins" formatında döndürme
+    return f"{time_in_minutes} mins"
+
 def update_journey_as_finished(journey_id):
     try:
         dynamodb = boto3.resource('dynamodb')
@@ -190,7 +198,7 @@ def lambda_handler(event, context):
         sorted_filtered_parks = sorted_filtered_parks[:10]
 
         for park in sorted_filtered_parks:
-            park['Time'] = get_travel_time(str(current_lat) + "," + str(current_lng), str(park['lat']) + "," + str(park['lng']))[0]
+            park['Time'] =   calculate_and_format_time(park['distance'])                                                     #get_travel_time(str(current_lat) + "," + str(current_lng), str(park['lat']) + "," + str(park['lng']))[0]
             park['MapsURL'] = "https://www.google.com/maps/dir/?api=1&origin=" + str(current_lat) + "," + str(current_lng) + "&destination=" + str(park['lat']) + "," + str(park['lng']) + "&travelmode=driving"
         print(sorted_filtered_parks)
 
