@@ -1,6 +1,17 @@
 import pytest
 import boto3
-from lambda_function import lambda_handler  # Lambda fonksiyonunuzu buradan import edin
+import sys
+import os
+#from lambda_function import lambda_handler  # Lambda fonksiyonunuzu buradan import edin
+relative_path = os.path.join(os.path.dirname(__file__), '..', 'login')
+relative_path = os.path.join(relative_path, '..')
+
+# Python'un modül yoluna bu yolu ekle
+sys.path.append(os.path.abspath(relative_path))
+
+# Şimdi modülü import edebilirsin
+#from lambda_function import lambda_handler  # Mevcut dizindeki lambda fonksiyonu
+from login.lambda_function import lambda_handler as login_lambda_handler  # login klasöründeki lambda fonksiyonu
 import json
 
 def test_successful_login():
@@ -49,7 +60,7 @@ def test_successful_login():
 }
     
     # Lambda fonksiyonunu çağırın ve yanıtı test edin
-    response = lambda_handler(event, None)
+    response = login_lambda_handler(event, None)
     assert response['statusCode'] == 200, "doğru passaport test i başarısız"
     assert 'token' in json.loads(response['body'])['message'], "Token dönmedi"
 
@@ -101,7 +112,7 @@ def test_wrong_password():
 }     
 }
             # Lambda fonksiyonunu çağırın ve yanıtı test edin
-    response = lambda_handler(event, None)
+    response = login_lambda_handler(event, None)
     assert response['statusCode'] == 402, "yanlış passaport test i başarısız"
     
 
@@ -155,7 +166,7 @@ def test_user_not_found():
 }     
 }
             # Lambda fonksiyonunu çağırın ve yanıtı test edin
-    response = lambda_handler(event, None)
+    response = login_lambda_handler(event, None)
     assert response['statusCode'] == 500, "olmayan kullanıcı test i başarısız"
    
 
@@ -208,7 +219,7 @@ def test_user_not_verified():
 }     
 }
             # Lambda fonksiyonunu çağırın ve yanıtı test edin
-    response = lambda_handler(event, None)
+    response = login_lambda_handler(event, None)
     assert response['statusCode'] == 501, "not verified test i başarısız"
     
     print("not verified test i başarılı")
@@ -259,7 +270,7 @@ def test_insufficient_permissions():
 }     
 }
             # Lambda fonksiyonunu çağırın ve yanıtı test edin
-    response = lambda_handler(event, None)
+    response = login_lambda_handler(event, None)
     assert response['statusCode'] == 403, "insufficient permission test i başarısız"
     
     print("insufficient permission test i başarılı")
