@@ -19,7 +19,7 @@ table = dynamodb.Table('Users')
 def lambda_handler(event, context):
     # Kullanıcı bilgilerini al
 
-    body =   json.loads(event['body'])        #event['body']
+    body =  json.loads(event['body'])          #event['body']                   
 
     username = body['username']
 

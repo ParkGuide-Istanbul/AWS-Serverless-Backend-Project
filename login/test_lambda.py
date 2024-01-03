@@ -1,16 +1,7 @@
-
 import pytest
-
 import boto3
 from lambda_function import lambda_handler  # Lambda fonksiyonunuzu buradan import edin
 import json
-
-
-
-# Test için gerekli DynamoDB ve diğer ayarlamalar
-
-
-
 
 def test_successful_login():
     event = {
