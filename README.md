@@ -36,7 +36,7 @@ body sample:
         "name": "Devrim",
         "surname": "Kafadar",
         "roles": [
-            "StandartUser",
+            "StandardUser",
             "Admin"
         ],
         "IsInJourney": "0"
