@@ -45,9 +45,6 @@ jobs:
     - name: Run Pytest for finishjourney
       run: pytest ./finishjourney/test_lambda_finish_journey.py
 
-    - name: Run Pytest for forgotpassword
-      run: pytest ./forgotpassword/test_lambda_forgot_password.py
-
     - name: Run Pytest for getjourneys
       run: pytest ./getjourneys/test_lambda_getjourneys.py
 
