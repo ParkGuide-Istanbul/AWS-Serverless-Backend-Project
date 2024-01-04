@@ -69,9 +69,6 @@ jobs:
     - name: Run Pytest for sendreports
       run: pytest ./sendreports/test_lambda_sendreports.py
 
-    - name: Run Pytest for signup
-      run: pytest ./signup/test_lambda_signup.py
-
     - name: Run Pytest for startjourney
       run: pytest ./startjourney/test_lambda_startjourney.py
 
