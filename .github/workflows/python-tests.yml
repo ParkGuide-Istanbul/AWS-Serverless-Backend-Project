@@ -41,3 +41,43 @@ jobs:
 
     - name: Run Pytest for configurestateparks
       run: pytest ./configurestateparks/test_lambda_configurestateparks.py
+
+    - name: Run Pytest for finishjourney
+      run: pytest ./finishjourney/test_lambda_finish_journey.py
+
+    - name: Run Pytest for forgotpassword
+      run: pytest ./forgotpassword/test_lambda_forgot_password.py
+
+    - name: Run Pytest for getjourneys
+      run: pytest ./getjourneys/test_lambda_getjourneys.py
+
+    - name: Run Pytest for getnearestparks
+      run: pytest ./getnearestparks/test_lambda_getnearestparks.py
+
+    - name: Run Pytest for getreports
+      run: pytest ./getreports/test_lambda_getreports.py
+
+    - name: Run Pytest for getuserlist
+      run: pytest ./getuserlist/test_lambda_getuserlist.py
+
+    - name: Run Pytest for listparks
+      run: pytest ./listparks/test_lambda_list_parks.py
+
+    - name: Run Pytest for login
+      run: pytest ./login/test_lambda_login.py
+
+    - name: Run Pytest for resetpassword
+      run: pytest ./resetpassword/test_lambda_resetpassword.py
+
+    - name: Run Pytest for sendreports
+      run: pytest ./sendreports/test_lambda_sendreports.py
+
+    - name: Run Pytest for signup
+      run: pytest ./signup/test_lambda_signup.py
+
+    - name: Run Pytest for startjourney
+      run: pytest ./startjourney/test_lambda_startjourney.py
+
+    - name: Run Pytest for verifycode
+      run: pytest ./verifycode/test_lambda.py
+    
