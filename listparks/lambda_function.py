@@ -15,7 +15,7 @@ def lambda_handler(event, context):
     # Token'ı Authorization header'ından al
 
     header = event['headers']              #  json.loads(event['headers'])
-    token = header['authorization-token']
+    token = header.get('authorization-token')
 
 
     # Token yoksa veya boşsa hata dön

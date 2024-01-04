@@ -84,26 +84,26 @@ def lambda_handler(event, context):
 
 # Test için örnek event
 
-event = {
-    "version": "2.0",
-    "routeKey": "POST /login",
-    "rawPath": "/dev2/login",
-    "rawQueryString": "",
-    "headers": {
-        "__requestverificationtoken": "3NAMpH5Gl6HAgNOKrfrWOuDcg0g3Z-2yZzscrBLJXEImvN0VY3zaRNVtMgVM5UMcIa3yTwJYiAaxES5BH6uX5Zl_UEzwBJtA5lYYx8RpVECnRdbMQaVDqHEuhPkir82aWn6c4A2",
-        "accept": "*/*",
-        "accept-encoding": "gzip, deflate, br"
-    },
-    "requestContext": {
-        "accountId": "405996282404",
-        "apiId": "o11xc731wl"
-    },
-    "body": {
-        "username": "alpbeydemir",
-        "password": "samplepassword",
-        "email": "alpbeydemir@hotmail.com",
-        "code": "271296"
-    }
-}
+# event = {
+#     "version": "2.0",
+#     "routeKey": "POST /login",
+#     "rawPath": "/dev2/login",
+#     "rawQueryString": "",
+#     "headers": {
+#         "__requestverificationtoken": "3NAMpH5Gl6HAgNOKrfrWOuDcg0g3Z-2yZzscrBLJXEImvN0VY3zaRNVtMgVM5UMcIa3yTwJYiAaxES5BH6uX5Zl_UEzwBJtA5lYYx8RpVECnRdbMQaVDqHEuhPkir82aWn6c4A2",
+#         "accept": "*/*",
+#         "accept-encoding": "gzip, deflate, br"
+#     },
+#     "requestContext": {
+#         "accountId": "405996282404",
+#         "apiId": "o11xc731wl"
+#     },
+#     "body": {
+#         "username": "alpbeydemir",
+#         "password": "samplepassword",
+#         "email": "alpbeydemir@hotmail.com",
+#         "code": "271296"
+#     }
+# }
 
-lambda_handler(event, None)
+# lambda_handler(event, None)

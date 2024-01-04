@@ -15,7 +15,7 @@ SECRET_KEY = 'Q56WTH4D98N1J2D5Z6U1UTKLDI4J5D6F'
 def lambda_handler(event, context):
     # Kullanıcı adı ve şifresi API Gateway'den alınır
     
-    body =  json.loads(event['body'])                   #event['body']  
+    body =  event['body']                        # json.loads(event['body'])
     username = body['username']
     password = body['password']
     required_roles = body['requiredRoles']
@@ -23,10 +23,10 @@ def lambda_handler(event, context):
     hashed_password = hashlib.sha256(password.encode()).hexdigest()
 
     # Kullanıcı bilgilerini DynamoDB'den kontrol et
-    try:
-        response = table.get_item(Key={'Username': username})
-    except ClientError as e:
-        print(e.response['Error']['Message'])
+    
+    response = table.get_item(Key={'Username': username})
+    """ response da item yoksa hata dön"""
+    if 'Item' not in response:
         return  {
                 'statusCode': 500,
                 'body': json.dumps({
@@ -34,6 +34,8 @@ def lambda_handler(event, context):
                     'message': 'Internal serer error: User not found'
                 })
             }
+
+        
 
     
 
@@ -96,7 +98,7 @@ def lambda_handler(event, context):
                 })   
         }
 
-# Test için
+# #Test için
 # event = {
 #     "version": "2.0",
 #     "routeKey": "POST /login",
@@ -134,11 +136,11 @@ def lambda_handler(event, context):
 #         "time": "26/Nov/2023:06:59:33 +0000",
 #         "timeEpoch": 1700981973556
 #     },
-#     "body":   {
-#         "username": "alpbeydemir",
-#         "password": "blabla",
-#         "requiredRoles": ["Admin", "ParkingSystemAdmin"] 
-#     }  
+#     "body":    {
+#         "username": "selinaksoy25",
+#         "password": "aksoyselin43",
+#         "requiredRoles": ["ParkingSystemAdmin"] 
+# }  
     
     
 # }

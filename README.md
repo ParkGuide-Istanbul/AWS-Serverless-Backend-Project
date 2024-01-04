@@ -36,7 +36,7 @@ body sample:
         "name": "Devrim",
         "surname": "Kafadar",
         "roles": [
-            "StandartUser",
+            "StandardUser",
             "Admin"
         ],
         "IsInJourney": "0"
@@ -111,6 +111,7 @@ alpbeydemir -> "password": "samplepassword",
 devrim24 -> "password": "67890",
 yeni_kullanici -> "password": "yeni_sifre",
 barisbeydemir -> "password": "12345",
+alpbeydemir -> "password": "samplepassword2"
 ```
 
 ### bu aşamadan sonra yazılan btün endpointlerde headers a Authorization eklenmesi zorunludur
@@ -299,6 +300,13 @@ bütün journey leri bilgileri ile beraber liste şeklinde veren endpoint, bunu 
 get request
 
 Bütün raporlar bu endpoint ile listelenebiliyor, sadece Admin rolüne sahip kullanıcılar bu endpointe istek atabilir
+
+
+###/getquicksearchresults  ->   https://o11xc731wl.execute-api.eu-central-1.amazonaws.com/dev2/getquicksearchresults      ----> mobil uygulama için
+
+get request
+
+kullanıcının en sık gittiği 4 destinarion lat-lng-district
 
 
 

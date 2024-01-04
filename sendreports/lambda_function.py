@@ -43,7 +43,7 @@ def lambda_handler(event, context):
 
     # Roller kontrolü (Rol isimlerini kendi gereksinimlerinize göre ayarlayın)
     roles = decoded_token.get('roles', [])
-    if 'StandartUser' not in roles and 'User' not in roles:
+    if 'StandardUser' not in roles and 'User' not in roles:
         return unauthorized_response('Unauthorized: insufficient permissions')
 
     # Request body'den rapor bilgilerini al
