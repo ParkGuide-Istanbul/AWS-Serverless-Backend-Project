@@ -30,7 +30,7 @@ jobs:
       run: |
         echo "AWS_ACCESS_KEY_ID=AKIAV5B2DUISHJQA22VA" >> $GITHUB_ENV
         echo "AWS_SECRET_ACCESS_KEY=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" >> $GITHUB_ENV
-        echo "AWS_REGION=eu-central-1" >> $GITHUB_ENV
+        echo "AWS_DEFAULT_REGION=eu-central-1" >> $GITHUB_ENV
 
 
     - name: Run Pytest for edituserlist
