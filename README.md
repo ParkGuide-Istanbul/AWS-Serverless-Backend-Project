@@ -3,12 +3,9 @@ AWS Serverless Backend Project of ParkGuide İstanbul Application
 
 ## Routes: 
 
-#**************************************************************MANUEL DEPLOYU UNUTMA*****************************************************************************
 
-###******************************************************COK ONEMLI KENDIME NOT*****************************************************************************
-aws console da lambda da test ederken -> event['body'] kullan
-deploy ederken ->  json.loads(event['body'])  kullan
-son aşamada json.loads kalsın
+
+
 ###**************************************************************************************
 
 ###/login   ->   https://o11xc731wl.execute-api.eu-central-1.amazonaws.com/dev2/login  
@@ -44,7 +41,7 @@ body sample:
 }
 ```
 
-IsInJourney değeri ekledim. eğer kullanıcı uygulamayı açtığında daha önce başlattığı bir journey i bitirmemişse ona göre bazı yerleri nonclikeble yapabilirsiniz.
+
 
 ###/signup   ->   https://o11xc731wl.execute-api.eu-central-1.amazonaws.com/dev2/signup  
 
@@ -111,7 +108,6 @@ alpbeydemir -> "password": "samplepassword",
 devrim24 -> "password": "67890",
 yeni_kullanici -> "password": "yeni_sifre",
 barisbeydemir -> "password": "12345",
-alpbeydemir -> "password": "samplepassword2"
 ```
 
 ### bu aşamadan sonra yazılan btün endpointlerde headers a Authorization eklenmesi zorunludur
@@ -310,6 +306,5 @@ kullanıcının en sık gittiği 4 destinarion lat-lng-district
 
 
 
-##***************************Kendime not*******************************
 
 pip3 install pyjwt --target=.\getuserlist\ --no-user
