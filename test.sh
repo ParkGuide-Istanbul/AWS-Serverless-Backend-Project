@@ -8,9 +8,9 @@ else
 fi
 
 echo "pip güncelleniyor..."
-python -m pip install --upgrade pip
+python3 -m pip3 install --upgrade pip
 echo "Bağımlılıklar requirements.txt'den yükleniyor..."
-pip install -r requirements.txt
+pip3 install -r requirements.txt
 
 # AWS CLI kurulumu
 echo "AWS CLI yükleniyor..."
