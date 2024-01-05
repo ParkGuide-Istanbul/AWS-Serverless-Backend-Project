@@ -1,14 +1,14 @@
 @echo off
 
 :: Python sürümünü kontrol et
-python --version 2>NUL | find "Python 3.8"
+python --version 2>NUL | find "Python 3"
 if %ERRORLEVEL% neq 0 (
     echo Python 3.8 bulunamadi. Lutfen manuel olarak yukleyin.
     exit /b
 )
 
 :: Python 3.8 bulunduysa, diğer komutlar çalıştırılabilir
-echo Python 3.8 yuklu.
+echo Python 3 yuklu.
 
 echo Upgrading pip...
 python -m pip install --upgrade pip
