@@ -6,9 +6,9 @@ import json
 def test_successful_signup():
     event = {
         "body": json.dumps({
-            "username": "yeniKullanici123567898",
+            "username": "yeniKullanici12356789",
             "password": "GüvenliParola1!",
-            "email": "fghfghfghgh@hotmail.com",
+            "email": "zehirm18@itu.edu.tr",
             "name": "Yeni",
             "surname": "Kullanıcı"
         })
@@ -22,7 +22,7 @@ def test_successful_signup():
     table = dynamodb.Table('Users')
     delete_response = table.delete_item(
             Key={
-                'Username': "yeniKullanici123567898"  # Bu öğeyi tanımlayan anahtar alan
+                'Username': "yeniKullanici12356789"  # Bu öğeyi tanımlayan anahtar alan
             }
         )
 
